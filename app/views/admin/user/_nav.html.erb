@@ -1,0 +1,8 @@
+	<div class="box">
+		<div class="title">Search</div>
+		<%= search_input @search, 'main' %>
+	</div>
+	<div class="box">
+		<div class="title">Actions</div>
+		<%= selectable_link_to 'Create new User', (controller.action_name == 'edit' and params[:id].nil?), :action => 'edit', :id => nil %>
+	</div>

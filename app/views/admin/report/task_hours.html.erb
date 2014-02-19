@@ -1,0 +1,42 @@
+<h1>Task Hours Report</h1>
+
+<% if @days.empty? -%>
+<p>No tasks found.</p>
+<% else -%>
+<% count_total = hours_total = 0 -%>
+<table id="task_hours">
+	<tr>
+		<th></th>
+		<th colspan="2">Tasks</th>
+		<th colspan="3">Assignments</th>
+	</tr>
+	<tr>
+		<th>Day</th>
+		<th>Number</th>
+		<th>Hours</th>
+		<th>Hours assigned</th>
+		<th>Hours done</th>
+		<th>Hours total</th>
+	</tr>
+<% @days.each do |day| -%>
+<% count_total += day.tasks_count -%>
+<% hours_total += day.task_hours.to_f -%>
+	<tr>
+		<td><%= day %></td>
+		<td class="r"><%= day.tasks_count %></td>
+		<td class="r"><%= day.task_hours %></td>
+		<td class="r"><%= day.hours_assigned %></td>
+		<td class="r"><%= day.hours_done %></td>
+		<td class="r"><%= day.hours_total %></td>
+	</tr>
+<% end -%>
+<tr>
+	<th colspan="6">Totals:</th>
+<tr>
+	<td></td>
+	<td class="r"><%= count_total %></td>
+	<td class="r"><%= Hours.in hours_total %></td>
+	<td colspan="3"></td>
+</tr>
+</table>
+<% end -%>

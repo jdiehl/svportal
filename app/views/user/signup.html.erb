@@ -1,0 +1,50 @@
+<h1>Become a Student Volunteer</h1>
+
+
+<%= validation_box @user %>
+
+<% if @user.errors['email'] == 'has already been taken' -%>
+<div id="notice">Please try logging in with your email address. If you forgot the password you can have it reset <%= link_to 'here', :controller => 'user', :action => 'password_request', :email => @user.email %>.</div>
+<% end -%>
+
+<div class="form">
+<% form_for 'user' do |f| %>
+	<label for="user_email">Email:</label>
+	<%= f.text_field :email %>
+	<label for="user_password">Password:</label>
+	<%= f.password_field :password %>
+	<label for="user_password">Password (again):</label>
+	<%= f.password_field :password_confirmation %>
+	<hr/>
+
+	<label for="user_first_name">First name:</label>
+	<%= f.text_field :first_name %>
+	<label for="user_last_name">Last name:</label>
+	<%= f.text_field :last_name %>
+	<label for="user_gender">Gender:</label>
+	<%= f.select :gender, switch_keys_and_values(User::GENDERS), !@user.gender %>
+	<hr/>
+	
+	<label for="user_home_country_id">Home Country:</label>
+	<%= f.select :home_country_id, Country.all, !@user.home_country_id %>
+	<label for="user_spoken_languages">Spoken languages:</label>
+	<%= f.text_field :spoken_languages %>
+	<label for="user_university">University:</label>
+	<%= f.text_field :university %>
+	<label for="user_degree">Degree program:</label>
+	<%= f.select :degree, User::DEGREE.reverse %>
+	<hr/>
+	
+	<label for="user_past_conferences">Past conferences you have attended:</label>
+	<%= f.text_field :past_conferences %>
+	<label for="user_past_sv">Past conferences you have attended as SV:</label>
+	<%= f.text_field :past_sv %>
+	<hr/>
+	
+	<label for="user_tshirt_size_id">Tshirt size:</label>
+	<%= f.select :tshirt_size_id, TshirtSize.all, !@user.tshirt_size_id %>
+	<hr/>
+
+	<%= submit_tag 'Save', :class => 'button' %>
+<% end %>
+</div>

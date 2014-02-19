@@ -1,0 +1,25 @@
+			<table>
+<% task.assignments_for_slots.each do |assignment| -%>
+<% if assignment -%>
+<% if assignment.check_for_conflict -%>
+				<tr id="slot_<%= assignment.id %>" class="s<%= assignment.status %> conflict">
+					<td>!!!<%= assignment.user.name %>(<%= @hours_report[assignment.enrollment_id] %>)</td>
+					<%= tooltip :td, link_to_change_hours(assignment), assignment.comment, :class => 'r n' %>
+					<td><%= link_to_cycle_status assignment %></td>
+					<td class="x"><%= link_to_unassign 'x', task, assignment.enrollment %></td>
+				</tr>
+<% else -%>
+				<tr id="slot_<%= assignment.id %>" class="s<%= assignment.status %>">
+					<td><%= assignment.user.name %>(<%= @hours_report[assignment.enrollment_id] %>)</td>
+					<%= tooltip :td, link_to_change_hours(assignment), assignment.comment, :class => 'r n' %>
+					<td><%= link_to_cycle_status assignment %></td>
+					<td class="x"><%= link_to_unassign 'x', task, assignment.enrollment %></td>
+				</tr>
+<% end -%>
+<% else -%>
+				<tr class="s">
+					<td colspan="4">unassigned</td>
+				</tr>
+<% end -%>
+<% end -%>
+			</table>

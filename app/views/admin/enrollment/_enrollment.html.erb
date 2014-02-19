@@ -1,0 +1,17 @@
+	<tr id="tr_enroll_<%= enrollment.id %>">
+		<td><%= link_to_update enrollment.user.name, 'user_edit', :action => 'user', :id => enrollment.user.id, :search => @search, :status => @status %></td>
+		<td><%= enrollment.user.university %></td>
+		<td><%= enrollment.user.country %></td>
+		<td><%= yesno enrollment.local_experience %></td>
+		<td><%= yesno enrollment.past_conferences_this %></td>
+		<td><%= yesno enrollment.past_sv_this %></td>
+		<td><%= yesno enrollment.visa %></td>
+		<td class="r"><%= enrollment.lottery_score %></td>
+		<td class="r"><%= enrollment.lottery %></td>
+		<td>
+		<%= active_input(enrollment, :comment, :class => 'comment') %><br/>
+		</td>
+		<td id="status_<%= enrollment.id %>" class="status">
+<%= render :partial => 'status', :locals => { :enrollment => enrollment }%>
+		</td>
+	</tr>

@@ -1,0 +1,19 @@
+<h1>All Users<% if @status %> with Status: <%= @status.name %><% end %></h1>
+
+<% if @users.empty? -%>
+<p>No users found.</p>
+<% else %>
+<table id="users">
+	<tr>
+		<th><%= link_to_toggle_order 'Last Name', 'last_name', @order %></th>
+		<th><%= link_to_toggle_order 'First Name', 'first_name', @order %></th>
+		<th><%= link_to_toggle_order 'Email', 'first_name', @order %></th>
+		<th><%= link_to_toggle_order 'Nationality', 'home_country_id', @order %></th>
+		<th><%= link_to_toggle_order 'University', 'university', @order %></th>
+	</tr>
+<%= render :partial => 'user', :collection => @users %>
+</table>
+<%= will_paginate @users %>
+
+<div id="user_edit" class="dialog" style="display:none"></div>
+<% end -%>

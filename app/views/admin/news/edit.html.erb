@@ -1,0 +1,27 @@
+<h1><%= @news.new_record? ? 'Post News': 'Edit News' %></h1>
+
+<%= validation_box @news %>
+
+<div class="form">
+<% form_for 'news' do |f| %>
+	<label for="news_created_at">Date:</label>
+	<%= f.text_field :created_at %>
+	<label for="news_title">Title:</label>
+	<%= f.text_field :title %>
+	<label for="news_text">Text:</label>
+	<%= f.text_area :text, :class => 'large' %>
+	<a href="http://whytheluckystiff.net/ruby/redcloth/" target="_blank">Markup Documentation</a>
+
+	<div class="buttons">
+<% if @news.new_record? -%>
+		<%= f.submit 'Create' %>
+<% else -%>
+		<%= f.submit 'Update' %>
+		<input type="button" value="Delete" onclick="new I10.Request.Reload(this,'<%= url_for :id => @news.id %>',{method:'delete'})"/>
+<% end -%>
+<% if request.xhr? -%>
+		<input type="button" value="Close" onclick="$('edit').hide()"/>
+<% end -%>
+	</div>
+<% end %>
+</div>

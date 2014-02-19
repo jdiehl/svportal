@@ -1,0 +1,25 @@
+<h1>All Users<% if @status %> with Status: <%= @status.name %><% end %></h1>
+
+<% if @enrollments.empty? -%>
+<p>No users found.</p>
+<% else %>
+<table id="enrollments">
+	<tr>
+		<th><%= link_to_toggle_order 'Name', 'users.last_name', @order %></th>
+		<th><%= link_to_toggle_order 'University', 'users.university', @order %></th>
+		<th><%= link_to_toggle_order 'Nationality', 'users.home_country_id', @order %></th>
+		<th><%= link_to_toggle_order 'Local', 'local_experience', @order %></th>
+		<th><%= link_to_toggle_order 'Past Attendee', 'past_conferences_this', @order %></th>
+		<th><%= link_to_toggle_order 'Past SV', 'past_sv_this', @order %></th>
+		<th><%= link_to_toggle_order 'Visa', 'visa', @order %></th>
+		<th>Tickets</th>
+		<th><%= link_to_toggle_order 'Lottery', 'lottery', @order %></th>
+		<th>Comment</th>
+		<th></th>
+	</tr>
+<%= render :partial => 'enrollment', :collection => @enrollments unless @enrollments.empty? %>
+</table>
+<%= will_paginate @enrollments %>
+
+<div id="user_edit" class="dialog" style="display:none"></div>
+<% end -%>

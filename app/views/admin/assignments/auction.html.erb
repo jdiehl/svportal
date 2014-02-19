@@ -1,0 +1,11 @@
+<h1>Task Assignment Auction</h1>
+
+<p>
+	The task assignment auction goes through all bids and assigns tasks to the users.
+	It can be run multiple times to process new bids but it cannot be reverted.
+</p>
+
+<div id="auction">
+	<input type="button" class="button" value="Run Auction" onclick="<%= remote_function :url => {},
+		:update => 'auction', :loading => "$('auction').innerHTML = 'Auction is running...'" %>">
+</div>

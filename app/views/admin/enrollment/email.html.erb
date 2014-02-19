@@ -1,0 +1,10 @@
+<h1>List of Emails for All Users<% if @status %> with Status: <%= @status.name %><% end %></h1>
+
+<% if @enrollments.empty? -%>
+<p>No users found.</p>
+<% else %>
+<p><%= @enrollments.count %> users:
+<textarea class="large">
+<%= @enrollments.collect { |enroll| enroll.user.email }.join ",\n" -%>
+</textarea>
+<% end -%>

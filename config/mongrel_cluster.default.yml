@@ -1,0 +1,7 @@
+--- 
+cwd: /Library/WebServer/Apps/chisv/
+log_file: log/mongrel.log
+port: "9000"
+environment: production
+pid_file: tmp/pids/mongrel.pid
+servers: 3

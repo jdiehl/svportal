@@ -1,0 +1,31 @@
+<h1>Conference Enrollment</h1>
+<p><i>for <%= @conference.name %></i></p>
+
+<% unless @conference.open_enrollment? -%>
+<p>Enrollment is currently disabled</p>
+<% else -%>
+
+<% form_for 'enroll' do |f| %>
+
+	<%= @conference.contract %>
+
+	<hr/>
+
+	<label class="large" for="enroll_local_experience">Have you lived in the conference city, or are you very familiar with it?</label>
+	<%= f.select_yesno :local_experience, nil, :class => 'small' %>
+	<label class="large" for="enroll_past_conferences_this">Have you attended this conference before?</label>
+	<%= f.select_yesno :past_conferences_this, nil, :class => 'small' %>
+	<label class="large" for="enroll_past_sv_this">Have you been an SV at this conference before?</label>
+	<%= f.select_yesno :past_sv_this, nil, :class => 'small' %>
+	<label class="large" for="enroll_no_visa">Do you need to apply for a travel visa in order to attend this conference? (answer no if you are eligible for a VISA waiver program for the country of the conference)</label>
+	<%= f.select :visa, {'No' => 1, 'Yes' => 0}, false, :class => 'small' %>
+<% if @conference.lottery_config.reason -%>
+	<br/><br/>
+	<label class="large" for="enroll_reason">Please explain why you want to be an SV at the conference.</label>
+	<textarea name="enroll[reason]" id="enroll_reason"></textarea>
+<% end -%>	
+	<hr/>
+	
+	<%= submit_tag 'Agree and enroll', :class => 'button' %>
+<% end %>
+<% end -%>

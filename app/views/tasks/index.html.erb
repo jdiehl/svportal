@@ -1,0 +1,39 @@
+<h1>Task Bidding</h1>
+
+<div id='days'>
+<% @conference.days.each do |day| -%>
+<% next if day.id == 0 -%>
+	<%= link_to_day(day, @day == day) %>
+<% end -%>
+	<div class="clear"></div>
+</div>
+<p>
+	If you want to work a certain task, place a bid on it by clicking the 
+	number on the right of the task description: 1 for high preference 
+	(3/day), 2 for medium preference (10/day), 3 for low preference.
+</p>
+
+<% unless @day.allow_bidding? -%>
+<p>
+	Bidding for this day has not been activated, yet.
+</p>
+<% end -%>
+
+<table id="tasks">
+	<tr>
+		<th>Start</th>
+		<th>End</th>
+		<th>Hours</th>
+		<th>Task</th>
+		<th>Slots</th>
+		<th colspan="4"></th>
+	</tr>
+<%= render :partial => 'task', :collection => @tasks %>
+</table>
+
+<% if @day.allow_bidding? -%>
+<div id='buttons'>
+	<%= button_to_reload 'Bid on all tasks', :action => 'bid_all', :day => @day.id %>
+	<%= button_to_reload 'Remove all bids', :action => 'bid_none', :day => @day.id %>
+</div>
+<% end -%>

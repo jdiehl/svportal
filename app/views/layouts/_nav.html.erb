@@ -1,0 +1,40 @@
+	<fieldset>
+		<legend>Navigation</legend>
+		<%= link_to 'News', :controller => 'news' %>
+	</fieldset>
+	<%= render :partial => 'layouts/login' %>
+<% if logged_in? -%>
+	<fieldset> 
+		<legend>Your Details</legend>
+		<%= link_to 'Edit Profile',    :controller => 'user', :action => 'profile' %>
+		<%= link_to 'Change Password', :controller => 'user', :action => 'password' %>
+	</fieldset>
+	<fieldset>
+		<legend>Enrollment Status</legend>
+<% if !@enroll or !@enroll.enrolled? -%>
+		<p>You are <b>not enrolled</b> for <%= @conference.name %>.</p>
+<% if @conference.open_enrollment? -%>
+		<%= link_to 'Enroll now',    :controller => 'enrollment', :action => 'enroll' %>
+<% else -%>
+		<p>Enrollment phase is over!</p>
+<% end -%>
+<% else -%>
+		<p>You are <b><%= @enroll.status_name %></b> for <%= @conference.name %>.</p>
+		<%= link_to 'View Waitlist', :controller => 'enrollment', :action => 'waitlist' if @conference.waitlist_enabled? %>
+		<%= link_to 'Unenroll',      :controller => 'enrollment', :action => 'unenroll' %>
+<% end -%>
+	</fieldset>
+<% if @enroll and @enroll.registered? -%>
+	<fieldset>
+		<legend>Tasks</legend>
+<% if @conference.bidding_enabled? -%>
+		<%= link_to 'Bid for tasks',     :controller => 'tasks' %>
+		<%= link_to 'My assigned tasks', :controller => 'tasks', :action => 'assignments' %>
+<% elsif @conference.bidding_temp_disabled? -%>
+		<p>At the moment we are assigning the tasks; the system will be available soon!</p>
+<% else -%>
+		<p>Task bidding is disabled</p>
+<% end -%>
+	</fieldset>
+<% end -%>
+<% end -%>

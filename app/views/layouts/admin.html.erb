@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Student Volunteers Portal</title>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="/favicon.png" type="image/png" />
+	<%= stylesheet_link_tag 'admin', :media => 'screen' %>
+	<%= stylesheet_link_tag 'admin_print', :media => 'print' %>
+	<%= javascript_include_tag :all %>
+</head>
+<body>
+
+<div id="nav">
+<%= render :partial => 'admin/nav' %>
+</div>
+
+<div id="main">
+<%= yield %>
+</div>
+
+</body>
+</html>

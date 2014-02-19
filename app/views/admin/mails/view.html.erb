@@ -1,0 +1,12 @@
+<h1>View message from archive</h1>
+
+<p>Date: <%= @mail.created_at %></p>
+<p>To: <%= @mail.status_name %></p>
+<p>More: <%= @mail.custom %></p>
+<p>Subject: <%= @mail.subject %></p>
+<p class="form"><textarea readonly="readonly" class="large"><%= @mail.text %></textarea></p>
+
+<p>
+	<input type="button" onclick="$('mail').hide();" value="Close"/>
+	<input type="button" onclick="document.location='<%= url_for :action => 'submit', :template => @mail.id %>'" value="Use as template"/>
+</p>

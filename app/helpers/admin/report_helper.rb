@@ -1,0 +1,2 @@
+module Admin::ReportHelper
+end

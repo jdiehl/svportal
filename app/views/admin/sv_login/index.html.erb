@@ -1,0 +1,26 @@
+<h1>All Users<% if @status %> with Status: <%= @status.name %><% end %></h1>
+
+<% if @enrollments.empty? -%>
+<p>No users found.</p>
+<% else %>
+<table id="enrollments">
+	<tr>
+		<th><%= link_to_toggle_order 'Last Name', 'users.last_name', @order %></th>
+		<th><%= link_to_toggle_order 'First Name', 'users.first_name', @order %></th>
+		<th><%= link_to_toggle_order 'Nationality', 'home_country_id', @order %></th>
+		<th><%= link_to_toggle_order 'University', 'university', @order %></th>
+		<th><%= link_to_toggle_order 'Status', 'status', @order %></th>
+	</tr>
+<% @enrollments.each do |enroll| -%>
+		<tr>
+			<td><%= link_to enroll.user.last_name, {:action => 'go', :id => enroll.user.id}, :target => 'chisv_client' %></td>
+			<td><%= enroll.user.first_name %></td>
+			<td><%= enroll.user.country %></td>
+			<td><%= enroll.user.university %></td>
+			<td><%= enroll.status_name %></td>
+		</tr>
+<% end -%>
+</table>
+
+<%= will_paginate @enrollments %>
+<% end -%>

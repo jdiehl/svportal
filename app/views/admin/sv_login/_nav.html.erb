@@ -1,0 +1,14 @@
+	<div class="box">
+		<div class="title">Status</div>
+		<p class="right"><%= @conference.count_enrollments %></p>
+		<%= selectable_link_to 'All', !@status, :action => 'index', :id => nil %>
+<% @conference.enrollment_status.each do |status| -%>
+		<p class="right"><%= status.count_enrollments %></p>
+		<%= selectable_link_to status, status == @status, :action => 'index', :id => status.id %>
+<% end -%>
+	</div>
+	
+	<div class="box">
+		<div class="title">Search</div>
+		<%= search_input @search, 'main' %>
+	</div>

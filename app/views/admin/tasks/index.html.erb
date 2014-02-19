@@ -1,0 +1,25 @@
+<% unless @day -%>
+<h1>Tasks Overview</h1>
+
+<p>Please select a day from the left.</p>
+<% else -%>
+<h1>Tasks for <%= @day %></h1>
+
+<% if @tasks.empty? %>
+<p>No tasks found.</p>
+<% else -%>
+<table id="tasks">
+	<tr>
+<% unless @day.id == 0 -%>
+		<th><%= link_to_toggle_order 'Start', 'start_time', @order %></th>
+		<th><%= link_to_toggle_order 'End', 'end_time', @order %></th>
+<% end -%>
+		<th><%= link_to_toggle_order 'Hours', 'hours', @order %></th>
+		<th><%= link_to_toggle_order 'Task', 'name', @order %></th>
+		<th><%= link_to_toggle_order 'Slots', 'slots', @order %></th>
+	</tr>
+<%= render :partial => 'task', :collection => @tasks %>
+</table>
+
+<div id="task_edit" class="dialog" style="display:none"></div>
+<% end end -%>

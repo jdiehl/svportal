@@ -1,0 +1,26 @@
+<h1><%= @draft.new_record? ? 'Add new Message': 'Edit Message' %></h1>
+
+<%= validation_box @draft %>
+
+<div class="form">
+<% form_for 'draft' do |f| %>
+	<label for="draft_event">Event:</label>
+	<%= f.select :event, switch_keys_and_values(Draft::EVENT_NAMES) %>
+	<label for="draft_title">Subject:</label>
+	<%= f.text_field :subject %>
+	<label for="draft_text">Text:</label>
+	<%= f.text_area :text, :class => 'large' %>
+
+	<div class="buttons">
+<% if @draft.new_record? -%>
+		<%= f.submit 'Create' %>
+<% else -%>
+		<%= f.submit 'Update' %>
+		<input type="button" value="Delete" onclick="new I10.Request.Reload(this,'<%= url_for :id => @draft.id %>',{method:'delete'})"/>
+<% end -%>
+<% if request.xhr? -%>
+		<input type="button" value="Close" onclick="$('edit').hide()"/>
+<% end -%>
+	</div>
+<% end %>
+</div>

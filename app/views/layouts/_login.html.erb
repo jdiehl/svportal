@@ -1,0 +1,21 @@
+	<fieldset id="login">
+		<legend>Login</legend>
+<% if logged_in? -%>
+		<p>You are logged in as <%= @user.name %>.</p>
+		<%= link_to 'Logout', logout_path %>
+<% else -%>
+		<div id="login_error" style="display:none"></div>
+		<% remote_form_for 'login', :url => login_path, :update => {:success => 'nav', :failure => 'login_error'}, 
+			:failure => "$('login_error').show();%s" % visual_effect('Shake', 'login_error', :distance => 3),
+			:success => controller.is_a?(NewsController) ? nil : "new I10.Request.Update (this,'chisv','%s')" % url_for(:controller => 'news') do |f| %>
+			<label for="login_email">Email:</label>
+			<%= f.text_field :email %>
+			<label for="login_password">Password:</label>
+			<%= f.password_field :password %>
+			<%= submit_tag 'Login', :class => 'submit' %>
+		<% end %>
+		<hr/>
+		<%= link_to 'Forgot Password', :controller => 'user', :action => 'password_request' %>
+		<%= link_to 'Sign up & Enroll',         :controller => 'user', :action => 'signup' %>
+<% end -%>
+	</fieldset>

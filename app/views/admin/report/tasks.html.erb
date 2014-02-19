@@ -1,0 +1,19 @@
+<h1>Tasks List</h1>
+<table>
+	<tr>
+		<th>Day</th>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Slots</th>
+		<th>Hours</th>
+	</tr>
+<% @tasks.each do |t| -%>
+	<tr>
+		<td><%= ConferenceDay.new(@conference, t.day) %></td>
+		<td><%= t.name %></td>
+		<td><%= t.description %></td>
+		<td><%= t.slots %></td>
+		<td><%= t.hours %></td>
+	</tr>
+<% end -%>
+</table>

@@ -1,0 +1,9 @@
+	<tr id="task_<%= task.id %>">
+	<% unless @day.id == 0 -%>
+		<td class="r"><%= task.start_time %></td>
+		<td class="r"><%= task.end_time %></td>
+	<% end -%>
+		<td class="r"><%= task.hours %></td>
+		<td><%= link_to_update task.name,'task_edit', {:action => 'edit', :id => task.id, :search => params['search']} %></td>
+		<td class="r"><%= task.slots %></td>
+	</tr>

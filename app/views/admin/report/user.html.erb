@@ -1,0 +1,58 @@
+<h1>Report for <%= @enroll.user.name %></h1>
+
+<h2>Assignments</h2>
+<table>
+<% observe -%>
+<% @enroll.assignments_with_tasks.each do |a| -%>
+<% if has_changed? a.task.day -%>
+	<tr>
+		<th colspan="5"><%= @conference.day a.task.day %></th>
+	</tr>
+<% end -%>
+	<tr>
+		<td class="r"><%= a.task.start_time %></td>
+		<td class="r"><%= a.task.end_time %></td>
+		<td class="r"><%= a.hours %></td>
+		<td><%= link_to a.task.name, :action => 'task', :id => a.task.id %></td>
+		<td class="s<%= a.status %>"><%= a.status_name %></td>
+	</tr>
+<% end -%>
+</table>
+
+<h2>Bids</h2>
+<table>
+<% observe -%>
+<% @enroll.bids_with_tasks.each do |a| -%>
+<% if has_changed? a.task.day -%>
+	<tr>
+		<th colspan="6"><%= @conference.day a.task.day %></th>
+	</tr>
+<% end -%>
+	<tr>
+		<td class="r"><%= a.task.start_time %></td>
+		<td class="r"><%= a.task.end_time %></td>
+		<td class="r"><%= a.task.hours %></td>
+		<td><%= link_to a.task.name, :action => 'task', :id => a.task.id %></td>
+		<td class="p<%= a.preference %>"><%= a.preference_name %></td>
+		<td class="s<%= a.status %>"><%= a.status_name %></td>
+	</tr>
+<% end -%>
+</table>
+
+<div class="space"></div>
+
+<h2>Overview</h2>
+<table class="noborder">
+	<tr>
+		<td>Hours assigned:</td>
+		<td class="r"><%= @enroll.hours_assigned %></td>
+	</tr>
+	<tr>
+		<td>Hours done:</td>
+		<td class="r"><%= @enroll.hours_done %></td>
+	</tr>
+	<tr>
+		<td>Hours total:</td>
+		<td class="r"><%= @enroll.hours_total %></td>
+	</tr>
+</table>

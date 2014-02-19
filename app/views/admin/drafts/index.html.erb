@@ -1,0 +1,18 @@
+<h1>Event Messages</h1>
+
+<% if @drafts.empty? -%>
+<p>No Messages.</p>
+<% else -%>
+<table id="drafts">
+	<tr>
+		<th><%= link_to_toggle_order 'Event', 'event', @order %></th>
+		<th><%= link_to_toggle_order 'Subject', 'subject', @order %></th>
+	</tr>
+<% @drafts.each do |draft| %>
+	<tr>
+		<td><%= draft.event_name %></td>
+		<td><%= link_to_dialog draft.subject, 'edit', :action => 'edit', :id => draft.id %></td>
+	</tr>
+<% end -%>
+<table>
+<% end -%>

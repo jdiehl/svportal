@@ -1,0 +1,30 @@
+<h1>Edit Conference Details</h1>
+
+<div class="form">
+<% form_for :conference, :url => {} do |f| %>
+	<%= f.name 'Conference:' %>
+	<%= f.email 'Email:' %>
+	<%= f.volunteers 'Volunteers:' %>
+	<%= f.start_date 'Start Date:' %>
+	<%= f.end_date 'End Date:' %>
+	<%= f.status 'Status:' %>
+	<p class="info">The conference status defines what students can do in the client portal:</p
+	<ul class="info">
+		<li>Planning: Conference does not show.</li>
+		<li>Enrollment: Students may enroll in the conference.</li>
+		<li>Registration: Lottery was run and students are registering for the conference. No more enrolling accepted.</li>
+		<li>Bidding: Bidding is open.</li>
+		<li>Running: Bidding is open and students can check their hours.</li>
+		<li>Over: Conference does not show.</li>
+	</ul>
+	<label for="conference_name">Bid until Day:</label>
+	<%= f.select :bid_day, @conference.days, true %>
+	<p class="info">This option will prevent students from bidding on tasks after the given date.</p>
+	<label for="conference_maintenance">Maintenance:</label>
+	<%= f.maintenance %>
+	<p class="info">Checking maintenance will prevent students from logging into the client portal.</p>
+	<label for="conference_contract">SV Contract:</label><br/>
+	<%= f.contract nil, :class => 'large' %>
+	<%= submit_tag 'Save', :class => 'button' %>
+<% end %>
+</div>

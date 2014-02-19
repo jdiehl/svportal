@@ -1,0 +1,23 @@
+<h1>Send Message</h1>
+
+<%= validation_box @mail %>
+
+<div class="form">
+<% form_for 'mail' do |f| %>
+	<p>From: <%= @conference.email %></p>
+	<%= f.status 'To:' %>
+	<label for="mail_custom">More:</label>
+	<%= f.text_field :custom %>
+	<%= f.subject 'Subject:' %>
+	<%= f.text 'Text:', :class => 'large' %>
+	
+	<p>A copy of the email will be sent to <%= @conference.email %>.</p>
+
+	<div class="buttons">
+		<%= f.submit 'Send' %>
+<% if request.xhr? -%>
+		<input type="button" value="Close" onclick="$('edit').hide()"/>
+<% end -%>
+	</div>
+<% end %>
+</div>

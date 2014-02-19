@@ -1,0 +1,12 @@
+	<div class="box">
+		<div class="title">Reports</div>
+		<%= selectable_link_to 'T-Shirts', params[:action] == 'tshirt', :action => 'tshirt' %>
+		<%= selectable_link_to 'Task List', params[:action] == 'tasks', :action => 'tasks' %>
+		<%= selectable_link_to 'SV Hours', params[:action] == 'user_hours', :action => 'user_hours' %>
+		<%= selectable_link_to 'Task Hours', params[:action] == 'task_hours', :action => 'task_hours' %>
+	</div>
+	
+	<div class="box">
+		<div class="title">Search</div>
+		<%= search_input params[:search], 'main' %>
+	</div>

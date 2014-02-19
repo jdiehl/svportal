@@ -1,0 +1,38 @@
+<h1>Accepted SVs and Waitlist</h1>
+<p>
+	Your enrollment status: You are <b><%= @enroll.status_name %></b>
+	<% if @enroll.status == Status::WAITLISTED %> at position <%= @enroll.waitlist_position(@waitlist) %>.<% end %>
+</p>
+<table id="waitlist">
+	<tr>
+		<th colspan="3">Accepted</td>
+	</tr>
+	<tr>
+		<th></th>
+		<th>Name</th>
+		<th>University</th>
+	</tr>
+<% @accepted.each do |enroll| -%>
+	<tr<% if enroll == @enroll %> class="self"<% end %>>
+		<td><%= 'R' if enroll.registered? %></td>
+		<td><%= enroll.user.name %></td>
+		<td><%= enroll.user.university %></td>
+	</tr>
+<% end -%>
+	<tr>
+		<th colspan="3" class="separator">On Waitlist</td>
+	</tr>
+	<tr>
+		<th>#</th>
+		<th>Name</th>
+		<th>University</th>
+	</tr>
+<% position = 0 -%>
+<% @waitlist.each do |enroll| -%>
+	<tr<% if enroll == @enroll %> class="self"<% end %>>
+		<td><%= position += 1 %></td>
+		<td><%= enroll.user.name %></td>
+		<td><%= enroll.user.university %></td>
+	</tr>
+<% end -%>
+</table>

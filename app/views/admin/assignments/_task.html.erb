@@ -1,0 +1,10 @@
+	<tr>
+		<td class="r"><%= task.start_time %></td>
+		<td class="r"><%= task.end_time %></td>
+		<td class="r"><%= task.hours %></td>
+		<td><%= link_to_users task.name, task %></td>
+		<td class="r"><span id="slots_<%= task.id %>_count"><%= task.assignments.length %></span>/<%= task.slots %></td>
+		<td id="slots_<%= task.id %>" class="slots">
+<%= render :partial => 'slots', :locals => {:task => task} %>
+		</td>
+	</tr>

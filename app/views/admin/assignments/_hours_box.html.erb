@@ -1,0 +1,12 @@
+<div class="form">
+<% remote_form_for 'assignment', :url => {}, 
+	:update => 'slots_%i' %  @assignment.task.id, 
+	:success => "$('hours_box').hide()" do |f| %>
+	<label>Hours:</label>
+	<%= f.text_field :hours %>
+	<label>Comment:</label>
+	<%= f.text_field :comment %>
+	<%= submit_tag 'Save', :class => 'button' %>
+	<%= button_to_function 'Close', "$('hours_box').hide()", :class => 'button' %>
+<% end %>
+</div>

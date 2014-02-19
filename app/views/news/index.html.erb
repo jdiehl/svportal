@@ -1,0 +1,27 @@
+<h1><%= @conference %> Student Volunteers</h1>
+<p>
+<% if @user -%>
+	Welcome back, <%= @user.first_name %>.
+<%   if @enroll -%>
+	You are <%= @enroll.status_name %> as a student volunteer.
+<%   else -%>
+	To become a student volunteer at the conference, please enroll on the right.
+<%   end -%>
+<% else -%>
+	Welcome to the student volunteer web portal.
+	To become a student volunteer at the conference, please log in or sign up on the right.
+<% end -%>
+</p>
+
+<% unless @news.empty? -%>
+<h2>News</h2>
+<div id="news">
+<% @news.each do |news| -%>
+	<div id="news_<%= news.id %>" class="news">
+		<p class="header"><%= news.title %></p>
+		<p><%= markup news.text %></p>
+	</div>
+<% end -%>
+	<%= will_paginate @news %>
+</div>
+<% end -%>

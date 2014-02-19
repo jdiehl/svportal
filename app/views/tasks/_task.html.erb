@@ -1,0 +1,21 @@
+	<tr id="tr_task_<%= task.id %>" class="<%= status_class task %>">
+		<td><%= task.start_time %></td>
+		<td><%= task.end_time %></td>
+		<td><%= task.hours %></td>
+		<%= tooltip :td, task.name, task.description %>
+		<td><%= task.slots %></td>
+<% if task.assignment_status -%>
+		<td colspan="4"><%= Assignment.status_name task.assignment_status %></td>
+<% elsif task.bid_status.to_i == Bid::FULL or task.full? -%>
+		<td colspan="4">Full</td>
+<% elsif task.bid_status.to_i == Bid::CONFLICT -%>
+		<td colspan="4">Conflict</td>
+<% elsif !@day.allow_bidding? -%>
+		<td colspan="4">Bidding&nbsp;disabled</td>
+<% else -%>
+<% Bid::PREFERENCE.each do |preference,title| -%>
+		<td class="bid p<%= preference %>"><%= bid_update preference, task, preference %></td>
+<% end -%>
+		<td class="bid p"><%= bid_remove 'x', task %></td>
+<% end -%>
+	</tr>

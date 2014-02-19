@@ -1,0 +1,18 @@
+<h1>Conferences</h1>
+
+<table>
+  <tr>
+    <th>Conference</th>
+    <th>Short</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+<% @conferences.each do |conference| -%>
+  <tr>
+  	<td><%= conference.name %></td>
+  	<td><%= conference.short_name %></td>
+  	<td><%= conference.status_name %></td>
+  	<td><%= link_to 'switch', :conference_name => conference.short_name, :controller => 'admin_conference' %></td>
+  </tr>
+<% end -%>
+</table>

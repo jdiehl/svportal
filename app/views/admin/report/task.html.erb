@@ -1,0 +1,38 @@
+<h1>Task Details</h1>
+
+<h2><%= @task.name %></h2>
+<p><%= @task.description %></p>
+<table class="noborder">
+	<tr>
+		<td>Date:</td>
+		<td><%= ConferenceDay.new @conference, @task.day %> (<%= @task.start_time %> - <%= @task.end_time %>)</td>
+	</tr>
+	<tr>
+		<td>Slots:</td>
+		<td><%= @task.assignments.count %> / <%= @task.slots %></td>
+	</tr>
+	<tr>
+		<td>Hours:</td>
+		<td><%= @task.hours %></td>
+	</tr>
+</table>
+
+<h2>Assignments</h2>
+<table>
+<% @task.assignments.each do |assignment| %>
+	<tr>
+		<td><%= assignment.enrollment.user.name %></td>
+		<td><%= assignment.status_name %></td>
+	</tr>
+<% end -%>
+</table>
+
+<h2>Bids</h2>
+<table>
+<% @task.bids_by_preference.each do |bid| %>
+	<tr>
+		<td><%= bid.enrollment.user.name %></td>
+		<td><%= bid.preference_name %></td>
+	</tr>
+<% end -%>
+</table>

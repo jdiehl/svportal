@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Student Volunteers Portal<% if @conference %> - <%= @conference.name %><% end %></title>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="/favicon.png" type="image/png" />
+	<%= stylesheet_link_tag 'client', :media => 'screen' %>
+	<%= javascript_include_tag :all %>
+</head>
+<body>
+	<div id="all">
+	
+<div id="main">
+	<h1>Welcome to the Student Volunteers Portal</h1>
+<% if @conferences.empty? -%>
+	<p>There are currently no open conferences</p>
+<% else -%>
+	<p>Please select a conference:</p>
+<% @conferences.each do |c| -%>
+	<p><%= link_to c.name,	{:controller => '', :conference_name => c.short_name } %></p>
+<% end -%>
+<% end -%>
+</div>
+
+<div id="footer">
+	Help us improve the Student Volunteer Portal! Join the
+	<a href="http://svportal.rubyforge.org" alt="SV Portal Rubyforge Project" target="rubyforge">Rubyforge project</a>.
+</div>
+
+	</div>
+</body>
+</html>

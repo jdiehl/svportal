@@ -1,0 +1,37 @@
+<h1>T-Shirt Report</h1>
+
+<h2>Overview</h2>
+<table>
+	<tr>
+		<th>Size</th>
+		<th>Amount</th>
+	</tr>
+<% @overview.each do |size| -%>
+	<tr>
+		<td><%= size.name %></td>
+		<td><%= size.amount %></td>
+	</tr>
+<% end -%>
+</table>
+
+<div class="space"></div>
+
+<h2>Student List</h2>
+<table>
+	<tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Email</th>
+		<th>T-Shirt Size</th>
+		<th>&nbsp;</th>
+	</tr>
+<% @enroll.each do |e| -%>
+	<tr>
+		<td><%= e.user.first_name %></td>
+		<td><%= e.user.last_name %></td>
+		<td><%= mail_to e.user.email %></td>
+		<td><%= e.user.tshirt_size %></td>
+		<td style="width:14px">&nbsp;</td>
+	</tr>
+<% end -%>
+</table>

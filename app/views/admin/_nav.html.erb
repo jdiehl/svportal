@@ -1,0 +1,30 @@
+	<div class="box">
+		<div class="title"><%= @conference %></div>
+		<%= selectable_link_to 'Conference',	 controller.is_a?(Admin::ConferenceController),	:controller => 'admin/conference',	:action => 'index', :id => nil %>
+<% if @admin_user.admin? -%>
+		<%= selectable_link_to 'Users',			 controller.is_a?(Admin::UserController),		:controller => 'admin/user',		:action => 'index', :id => nil %>
+		<%= selectable_link_to 'News',			 controller.is_a?(Admin::NewsController),		:controller => 'admin/news',		:action => 'index', :id => nil %>
+		<%= selectable_link_to 'Messages',		 controller.is_a?(Admin::MailsController),		:controller => 'admin/mails',		:action => 'index', :id => nil %>
+<% # removed the event manager from the navigation since it is not used yet -%>
+<% # selectable_link_to 'Event Messages', controller.is_a?(Admin::DraftsController),		:controller => 'admin/drafts',		:action => 'index', :id => nil -%>
+		<%= selectable_link_to 'Enrollment',	 controller.is_a?(Admin::EnrollmentController),	:controller => 'admin/enrollment',	:action => 'index', :id => nil %>
+		<%= selectable_link_to 'Tasks',			 controller.is_a?(Admin::TasksController),		:controller => 'admin/tasks',		:action => 'index', :id => nil %>
+<% end -%>
+		<%= selectable_link_to 'Assignments',	controller.is_a?(Admin::AssignmentsController),	:controller => 'admin/assignments',	:action => 'index', :id => nil %>
+		<%= selectable_link_to 'Reports',		controller.is_a?(Admin::ReportController),		:controller => 'admin/report',		:action => 'index', :id => nil %>
+	</div>
+<% if controller.controller_name == 'admin' -%>
+	<%= render :partial => '/admin/sv_login/nav' %>
+<% else -%>
+	<%= render :partial => 'nav' %>
+<% end %>
+	<div class="box">
+		<div class="title">Login</div>
+		<p>Logged in as: <%= @admin_user.login %> (<%= @admin_user.status_name %>)</p>
+	<% if @admin_user.super_admin? -%>
+		<%= selectable_link_to 'Conference Admin', controller.is_a?(Admin::AdminConferenceController), :controller => 'admin/admin_conference',	:action => 'index', :id => nil %>
+		<%= selectable_link_to 'User Admin', controller.is_a?(Admin::AdminUserController), :controller => 'admin/admin_user',	:action => 'index', :id => nil %>
+	<% end -%>
+		<%= selectable_link_to 'Login to Client as SV', controller.is_a?(Admin::SvLoginController), :controller => 'admin/sv_login', :action => 'index' %>
+		<%= link_to 'Logout', :controller => '/admin', :action => 'logout' %>
+	</div>

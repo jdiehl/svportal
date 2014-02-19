@@ -1,0 +1,92 @@
+/* Layout */
+*{font-family:Helvetic,sans-serif;}
+body{background:#ccc;}
+#all{background:#fff;border:1px solid #000;width:768px;margin:auto;}
+
+/* main view */
+#main{font-size: 9pt;width: 500px; padding:25px;}
+#main .clear{clear:both;}
+#main .space{margin:1em 0;height:1px;}
+#main .loading{background:url('/images/loading.gif') right no-repeat;}
+#main .l{text-align:left;}
+#main .m{text-align:middle;}
+#main .r{text-align:right;}
+#main .n{white-space:nowrap;}
+#main h1{margin:0 0 15px 0;}
+#main hr{border:0;border-bottom:1px solid #aaa;margin:16px 0;}
+#main table{border-collapse:collapse;}
+#main td{border:1px solid #ccc;padding:1px 3px;}
+#main label{float:left;width:140px;}
+#main label.large{width:390px;}
+#main input.small,#main select.small{margin-left:410px;width:75px;}
+#main input, #main select{display:block;margin-left:150px;margin-bottom:10px;width:300px;}
+#main textarea{height:150px;width:100%;margin-top:10px;margin-bottom:10px}
+#main input.button{display:inline;margin:0 0 0 32px;padding:1px 20px;font-size:12pt;width:auto;}
+
+/* Navigation */
+#nav{float:right;width:200px;margin:25px;font-size:10pt;}
+#nav img{border:0}
+#nav fieldset{width:180px;padding:0;margin-bottom:10px;}
+#nav legend{font-size:9pt;font-weight:bold;}
+#nav a{display:block;color:#000;padding:5px;}
+#nav a:hover{background:#aaf;}
+#nav hr{border:0;border-top:1px solid #888;border-bottom:1px solid #fff;}
+#nav p{margin:5px;}
+#nav p a{display:inline;padding:0;}
+#nav label{display:block;padding:5px 5px 0 5px;}
+#nav input{display:block;margin:0 5px 5px 5px;padding:1px 3px;width:159px;}
+#nav input.submit{width:auto;display:block;margin-left:auto;}
+#nav #login_error{margin:5px;padding:2px;border:2px solid #f44;background:#fcc;font-weight:bold;}
+#nav .i10{text-align:center;}
+
+/* Footer */
+#footer{clear:both;padding:1px 3px;font-size:8pt;text-align:center;margin:0 25px;border-top:1px solid #888}
+
+/* Messages */
+#notice{margin:20px;padding:6px;border:3px solid #4e4;background:#cec;font-weight:bold;}
+#error{margin:20px;padding:6px;border:3px solid #f44;background:#fcc;font-weight:bold;}
+#error ul{margin:10px 0 10px 40px;}
+
+/* News */
+#news .header{font-weight:bold;font-size:12pt;border-bottom:1px solid #000;margin-top:2em;}
+
+/* Waitlist */
+#main #waitlist{border-collapse:collapse;}
+#main #waitlist td{border:1px solid #aaa;padding:1px 3px;}
+#main #waitlist .dropped td{text-decoration:line-through;color:#888;}
+#main #waitlist .separator{padding-top:2em;}
+
+/* Self */
+#main .self {background-color: #99d; color: #FFFFFF;}
+
+/* Bidding */
+#main #days{border:1px solid #ccc;width:auto;width:476px;}
+#main #days a{float:left;display:block;width:60px;padding:1px 3px;margin:1px;color:#000;background:#ccc;text-align:center;}
+#main #days a:hover{background:#000;color:#fff;}
+#main #days a.selected{background:#000;color:#fff;}
+#main #days a.inactive{font-style:italic;}
+#main #tasks .p{background:#fff;}
+#main #tasks .p1{background:#99d;}
+#main #tasks .p2{background:#bbe;}
+#main #tasks .p3{background:#ddf;}
+#main #tasks .a{background:#8e8;}
+#main #tasks .f{background:#f88;}
+#main #tasks .c{background:#f88;}
+#main #tasks .bid{padding:0;}
+#main #tasks .bid a{padding:1px 5px;display:block;text-align:center;}
+#main #tasks .bid:hover{background:#000;}
+#main #tasks .bid:hover a{color:#fff;}
+#main #buttons input {margin-top:20px; padding-right:10px;margin-right:50px;}
+
+/* Assignments */
+#main #assignments .status{font-weight:bold;}
+#main #assignments .s1{color:#66c;}
+#main #assignments .s2{color:#880;}
+#main #assignments .s3{color:#3b3;}
+#main #assignments .separator{text-align:left;padding-top:1em;}
+
+/* Tooltips */
+#tooltip{position:absolute;z-index:20;background:#dee7f7;border:1px solid #336;width:250px;padding:4px;color:#000;font-size:11px;line-height:1.2;border-bottom:2px solid #000;border-right:2px solid #000;}
+.hours.tooltip:after{content:" (*)";}
+
+#debug{position:fixed;top:0;left:0;width:100%;z-index:20;text-align:center;background:#ff8;padding:1px 3px;border-bottom:2px solid #000;color:#000;font-weight:bold;}

@@ -1,0 +1,22 @@
+<h1>Messages</h1>
+
+<% unless @mails -%>
+<p>No Messages.</p>
+<% else -%>
+<table id="drafts">
+	<tr>
+		<th><%= link_to_toggle_order 'Date', 'created_at', @order %></th>
+		<th><%= link_to_toggle_order 'Subject', 'subject', @order %></th>
+		<th>Recipients</th>
+	</tr>
+<% @mails.each do |mail| %>
+	<tr>
+		<td><%= human_date mail.created_at %></td>
+		<td><%= link_to_dialog mail.subject, 'mail', :action => 'view', :id => mail.id %></td>
+		<td><%= mail.status_name %></td>
+	</tr>
+<% end -%>
+<table>
+<% end -%>
+
+<p>The current Email Queue contains <%= pluralize(@email_queue_length, 'message') %>.</p>

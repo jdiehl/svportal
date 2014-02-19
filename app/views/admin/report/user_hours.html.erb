@@ -1,0 +1,26 @@
+<h1>Student Volunteer Hours Report</h1>
+
+<% if @users.empty? -%>
+<p>No users found.</p>
+<% else -%>
+<table id="user_hours">
+	<tr>
+		<th><%= link_to_toggle_order 'Last Name', 		'last_name',		@order %></th>
+		<th><%= link_to_toggle_order 'First Name', 		'first_name',		@order %></th>
+		<th><%= link_to_toggle_order 'Bids placed', 	'bids_count',		@order %></th>
+		<th><%= link_to_toggle_order 'Hours assigned', 	'hours_assigned',	@order %></th>
+		<th><%= link_to_toggle_order 'Hours done', 		'hours_done',		@order %></th>
+		<th><%= link_to_toggle_order 'Hours total', 	'hours_total',		@order %></th>
+	</tr>
+<% @users.each do |enroll| %>
+<tr>
+	<td><%= link_to enroll.last_name, :action => 'user', :id => enroll.id %></td>
+	<td><%= enroll.first_name %></td>
+	<td><%= enroll.bids_count %></td>
+	<td class="r"><%= enroll.hours_assigned %></td>
+	<td class="r"><%= enroll.hours_done %></td>
+	<td class="r"><%= enroll.hours_total %></td>
+</tr>
+<% end -%>
+</table>
+<% end -%>

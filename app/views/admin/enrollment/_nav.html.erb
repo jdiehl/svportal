@@ -1,0 +1,21 @@
+	<div class="box">
+		<div class="title">Status</div>
+		<p class="right"><%= @conference.count_enrollments %></p>
+		<%= selectable_link_to 'All', !@status, :action => 'index', :id => nil %>
+<% Status.each do |status| -%>
+		<p class="right"><%= @conference.count_enrollments(status) %></p>
+		<%= selectable_link_to Status.name(status), status == @status, :action => 'index', :id => status %>
+<% end -%>
+	</div>
+	
+	<div class="box">
+		<div class="title">Search</div>
+		<%= search_input @search, 'main' %>
+	</div>
+	
+	<div class="box">
+		<div class="title">Actions</div>
+		<%= selectable_link_to 'Create new User', (controller.action_name == 'user' and params[:id].nil?), :action => 'user', :id => nil %>
+		<%= selectable_link_to 'List Emails', (controller.action_name == 'email'), :action => 'email', :id => @status ? @status.id : nil %>
+		<%= selectable_link_to 'Export List', (controller.action_name == 'export'), :action => 'export', :id => @status ? @status.id : nil %>
+	</div>

@@ -1,0 +1,39 @@
+<h1>Conference Details</h1>
+
+<table>
+	<tr>
+		<td>Conference:</td>
+		<td><%= @conference.name %></td>
+	</tr>
+	<tr>
+		<td>Year:</td>
+		<td><%= @conference.year %></td>
+	</tr>
+	<tr>
+		<td># Volunteers:</td>
+		<td><%= @conference.volunteers %></td>
+	</tr>
+	<tr>
+		<td>Start Date:</td>
+		<td><%= @conference.start_date %></td>
+	</tr>
+	<tr>
+		<td>End Date:</td>
+		<td><%= @conference.end_date %></td>
+	</tr>
+	<tr>
+		<td>Bid until Day:</td>
+		<td><%= @conference.bid_day ? @conference.day(@conference.bid_day) : 'not set' %></td>
+	</tr>
+	<tr>
+		<td>Status:</td>
+		<td><%= @conference.status_name %></td>
+	</tr>
+	<tr>
+		<td>Maintenance:</td>
+		<td><%= @conference.maintenance ? 'yes' : 'no' %></td>
+	</tr>
+</table>
+
+<h1>SV Contract</h1>
+<%= @conference.contract %>

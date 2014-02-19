@@ -1,0 +1,18 @@
+<h1>News</h1>
+
+<% if @news.empty? -%>
+<p>No News.</p>
+<% else -%>
+<table id="news">
+	<tr>
+		<th><%= link_to_toggle_order 'Date', 'created_at', @order %></th>
+		<th><%= link_to_toggle_order 'Title', 'title', @order %></th>
+	</tr>
+<% @news.each do |news| %>
+	<tr>
+		<td><%= human_date news.created_at %></td>
+		<td><%= link_to_dialog news.title, 'edit', :action => 'edit', :id => news.id %></td>
+	</tr>
+<% end -%>
+<table>
+<% end -%>

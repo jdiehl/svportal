@@ -1,0 +1,12 @@
+<% if users.empty? -%>
+<p>No registered students found.</p>
+<% else -%>
+<table>
+<% users.each do |enroll| -%>
+	<tr id="user_<%= enroll.id %>" class="p<%= enroll.bid_status.to_i == Bid::CONFLICT ? 'x' : (enroll.bid_preference ? enroll.bid_preference : '') %>">
+		<td><%= link_to_assign '%s %s (%s)' % [enroll.first_name, enroll.last_name, @hours_report[enroll.id]], @task, enroll %></td>
+		<td><%= enroll.bid_preference ? (enroll.bid_status.to_i == Bid::CONFLICT ? Bid.status_name(enroll.bid_status) : Bid.preference_name(enroll.bid_preference)) : 'no bid' %></td>
+	</tr>
+<% end -%>
+</table>
+<% end -%>
