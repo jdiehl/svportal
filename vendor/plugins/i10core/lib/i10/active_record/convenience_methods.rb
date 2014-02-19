@@ -33,7 +33,7 @@ module I10::ActiveRecord::ConvenienceMethods
   end
   
   # default string representation calls name method if exists
-  def to_s
+  def to_s(type = nil)
     return name if respond_to? :name
     super
   end

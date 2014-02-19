@@ -6,4 +6,5 @@
 		<td class="r"><%= task.hours %></td>
 		<td><%= link_to_update task.name,'task_edit', {:action => 'edit', :id => task.id, :search => params['search']} %></td>
 		<td class="r"><%= task.slots %></td>
+		<td class="r"><%= task.tasktype %></td>
 	</tr>

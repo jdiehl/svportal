@@ -1,0 +1,36 @@
+	<tr id="tr_task_<%= tasktype.id %>" class="p <%= status_class tasktype %>">
+		<%= tooltip :td, tasktype.name, tasktype.description %>
+		<td><%= tasktype.slots %></td>
+<% if tasktype.assignment_status -%>
+		<td colspan="4"><%= Assignment.status_name tasktype.assignment_status %></td>
+<% elsif tasktype.bid_status.to_i == Bid::FULL or tasktype.full? -%>
+		<td colspan="4">Full</td>
+<% elsif tasktype.bid_status.to_i == Bid::CONFLICT -%>
+		<td colspan="4">Conflict</td>
+<% else -%>
+<% Bid::PREFERENCE.each do |preference, title| -%>
+                <td class="bid p<%= preference %>">
+                  <input type="radio" name="radio_<%= tasktype.id %>"
+                         value="<%= preference %>"
+                         class="cat<%= tasktype.category_id %> tt<%= tasktype.id %> <%= Bid.preference_name(preference) %>"
+                         onchange="updateCounts(<%= tasktype.category_id %>); updateColour(<%= tasktype.id %>, <%= preference %>);"
+                         <% if tasktype.bid_preference.to_i == preference -%>
+                         checked
+                         <% end -%>
+                         />
+                  <%=  Bid.preference_name(preference) %>
+                </td>
+<% end -%>
+		<td class="bid p0">
+                  <input type="radio" name="radio_<%= tasktype.id %>"
+                         value="0"
+                         class="cat<%= tasktype.category_id %> tt<%= tasktype.id %> none"
+                         onchange="updateCounts(<%= tasktype.category_id %>); updateColour(<%= tasktype.id %>, 0);"
+                         <% if 0 == tasktype.bid_preference.to_i -%>
+                         checked
+                         <% end -%>
+                         />
+                  none
+                </td>
+<% end -%>
+	</tr>

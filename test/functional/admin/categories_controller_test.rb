@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EmailTest < ActiveSupport::TestCase
+class Admin::CategoriesControllerTest < ActionController::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true

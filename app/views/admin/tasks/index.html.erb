@@ -17,6 +17,7 @@
 		<th><%= link_to_toggle_order 'Hours', 'hours', @order %></th>
 		<th><%= link_to_toggle_order 'Task', 'name', @order %></th>
 		<th><%= link_to_toggle_order 'Slots', 'slots', @order %></th>
+		<th><%= link_to_toggle_order 'Task Type', 'tasktype', @order %></th>
 	</tr>
 <%= render :partial => 'task', :collection => @tasks %>
 </table>

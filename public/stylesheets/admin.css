@@ -26,9 +26,8 @@ textarea.large{width:100%;height:500px;padding:2px;}
 .space{margin:1em 0;height:1px;}
 .loading{background:url('/images/loading.gif') right no-repeat;}
 .pagination{text-align:center;margin:10px;}
-.dialog{position:fixed;z-index:10;overflow:auto;top:50px;right:10px;width:auto;height:auto;max-height:600px;max-width:50%;padding:20px;border:2px solid #000;background:#fff;}
+.dialog{position:fixed;z-index:10;overflow:auto;top:50px;right:10px;width:auto;height:auto;max-height:700px;max-width:50%;padding:20px;border:2px solid #000;background:#fff;}
 .dialog h1{text-align:left;background:#aad;color:#fff;margin:-10px -10px 1em -10px;padding:5px 2px;border:0;}
-.dialog p{margin-bottom: 20px;}
 .noborder td,.noborder th{border:0;}
 .export{width:800px;height:500px;}
 .form label{float:left;width:140px;}
@@ -42,9 +41,6 @@ textarea.large{width:100%;height:500px;padding:2px;}
 .form .info{font-style:italic;font-size:10pt;margin:0 0 20px 0;}
 .buttons{text-align:center;}
 .buttons input,#main .form .button{display:inline;margin:10px;padding:2px 5px;width:auto;font-size:11pt;}
-
-.lotteryform label{float:left;width:390px;}
-.lotteryform select{display:block;margin-left:400px;margin-bottom:10px;width:150px;padding:2px 5px;}
 
 #error{margin:20px;padding:6px;border:3px solid #f44;background:#fcc;font-weight:bold;}
 #error ul{margin:10px 0 10px 40px;}
@@ -74,7 +70,6 @@ textarea.large{width:100%;height:500px;padding:2px;}
 #enrollments .comment:hover,#enrollments .comment.active{background:#eee;}
 
 #assignments .slots table{width:100%;}
-#main #assignments .conflict,#assignments .conflict:hover{background:#e77;}
 #assignments .s1,#assignments .s1:hover{background:#bbe;}
 #assignments .s2,#assignments .s2:hover{background:#cc4;}
 #assignments .s3,#assignments .s3:hover{background:#7e7;}
@@ -96,5 +91,3 @@ textarea.large{width:100%;height:500px;padding:2px;}
 .tooltip{font-weight:bold;}
 
 #debug{position:fixed;top:0;left:0;width:100%;z-index:20;text-align:center;background:#ff8;padding:1px 3px;border-bottom:2px solid #000;color:#000;font-weight:bold;}
-
-#export{width:100%; height:600px;}

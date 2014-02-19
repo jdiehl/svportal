@@ -1,6 +1,6 @@
 class Conference < ActiveRecord::Base
-  has_one :lottery_config
-  
+  has_many :categories
+
   PLANNING = 0
   ENROLLMENT = 1
   REGISTRATION = 2
@@ -67,7 +67,16 @@ class Conference < ActiveRecord::Base
     @days
   end
   
-  # return the nth day of the conference
+  # return the categories of the conference
+  def categories
+    Category.find :all, :conditions => {:conference_id => self.id}
+  end
+
+  def tasktypes
+    Tasktype.find :all, :conditions => {:conference_id => self.id}
+  end
+
+# return the nth day of the conference
   def day(id)
     days[id.to_i]
   rescue
@@ -157,5 +166,10 @@ class Conference < ActiveRecord::Base
   # has the lottery run?
   def lottery_run?
     status > ENROLLMENT
+  end
+  # string representation
+
+  def maintenance
+    false
   end
 end

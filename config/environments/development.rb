@@ -17,12 +17,5 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = true
 
 # setup ActionMailer
-ActionMailer::Base.delivery_method = :activerecord
-# ActionMailer::Base.delivery_method = :sendmail
-ActionMailer::Base.perform_deliveries = true
-ActionMailer::Base.smtp_settings = {
-  :address => "smarthost.rwth-aachen.de",
-  :port => 25,
-  :domain => "cs.rwth-aachen.de",
-  :authentication => :plain
-  }
+ActionMailer::Base.delivery_method = :sendmail
+ActionMailer::Base.perform_deliveries = false

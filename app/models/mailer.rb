@@ -1,5 +1,4 @@
-require 'action_mailer/ar_mailer'
-class Mailer < ActionMailer::ARMailer
+class Mailer < ActionMailer::Base
   
   def draft(draft, email, variables)
     subject    draft.subject

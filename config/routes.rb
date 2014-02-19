@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 
-  # chi routes
+# chi routes
   map.connect ':conference_name/:controller/:action/:id'
   map.connect ':conference_name/:controller/:action/:id'
   map.connect ':conference_name/', :controller => 'main', :action => 'index'

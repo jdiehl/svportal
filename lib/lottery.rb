@@ -1,5 +1,3 @@
-require 'array+randomize.rb'
-
 # The lottery assigns a random order to all enrolled students and accepts or waitlists them
 # according to the number of sv spots in the conference.
 # 
@@ -9,60 +7,17 @@ class Lottery
   # constructor
   def initialize(conference)
     @conference = conference
-    @config = conference.lottery_config
   end
   
   # run the lottery
   def run
-    
-    # duplicate users according to attributes and config
-    enroll_poll = []
-    enroll_out = []
-    load_enroll.each do |enroll|
-      if enroll.lottery_score > 0
-        1.upto(enroll.lottery_score) { enroll_poll << enroll }
-      else
-        enroll_out << enroll
-      end
-    end
-    
-    # randomize list
-    enroll_poll.randomize!
-    
-    # assign numbers (track already enrolled)
-    while enroll_poll.length > 0
-      enroll = enroll_poll.first
+    random_users.each do |enroll|
       assign_number enroll
-      enroll_poll.delete enroll
-    end
-    
-    # assign numbers to svs that were left out
-    enroll_out.randomize.each do |enroll|
-      assign_number enroll
-    end
-  end
-  
-  # reset the lottery run
-  def reset
-    enroll_list = Enrollment.find :all,
-      :conditions => 'conference_id = %i and lottery IS NOT NULL' % [@conference.id]
-      
-    enroll_list.each do |enroll|
-      enroll.status = Status::ENROLLED
-      enroll.comment = nil
-      enroll.lottery = nil
-      enroll.save!
     end
   end
       
   
   protected
-  
-  # load users from the database
-  def load_enroll
-    Enrollment.find :all,
-      :conditions => 'status = %i and conference_id = %i and lottery IS NULL' % [Status::ENROLLED, @conference.id]
-  end
   
   # assign status ACCEPTED or ON_WAITLIST, depending on order..
   def assign_number(enroll)
@@ -100,5 +55,14 @@ class Lottery
     e = Enrollment.find :first, :conditions => {:conference_id => @conference.id}, :order => 'lottery desc'
     @number = e.lottery ? e.lottery : 1
   end
+  
+  # fetch enrolled users in random order
+  def random_users
+    Enrollment.find :all,
+      :conditions => 'status = %i and conference_id = %i and lottery IS NULL' % [Status::ENROLLED, @conference.id],
+      :order => 'rand()'
+  end
+  
+  
   
 end

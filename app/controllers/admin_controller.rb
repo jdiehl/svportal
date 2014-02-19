@@ -72,7 +72,7 @@ class AdminController < ActionController::Base
   
   # do not render layout on xhr requests
   def render(options = {})
-    options[:layout] = request.xhr? ? false : 'admin' unless options.key? :layout or request.parameters['action'] == 'dump'
+    options[:layout] = request.xhr? ? false : 'admin' unless options.key? :layout
     super options
   end
   

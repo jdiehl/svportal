@@ -1,0 +1,21 @@
+<h1><% if @category.new_record? %>Create new category<% else %>Edit Category<% end %></h1>
+
+<%= validation_box @category %>
+
+<div class="form">
+<% form_for 'category' do |f| %>
+	<label for="category_name">Name:</label>
+	<%= f.text_field :name %>
+	<div class="buttons">
+<% if @category.new_record? -%>
+		<%= f.submit 'Create Category' %>
+<% else -%>
+		<%= f.submit 'Update Category' %>
+		<input type="button" value="Delete" onclick="if(confirm('Are you sure you want to delete this category? All tasks in it will be deleted as well.')) { new DeleteCategory(this,'<%= @category.id %>'); }"/>
+<% end -%>
+<% if request.xhr? -%>
+		<input type="button" value="Close" onclick="$('edit').hide()"/>
+<% end -%>
+	</div>
+<% end %>
+</div>

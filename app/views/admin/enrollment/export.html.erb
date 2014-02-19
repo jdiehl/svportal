@@ -1,8 +1,0 @@
-<h1>Enrollment Export</h1>
-
-<textarea id="export" readonly="readonly">
-Name	Email	Last Name	First name	Gender	Nationality	Spoken languages	University	Degree program	Past conference attended	Past conference attended as SV	Tshirt size	Enrollment Status	Local	Past Attendee	Past SV	Visa
-<% @enrollments.each do |enroll| -%>
-<%= enroll.user.name %>	<%= enroll.user.email %>	<%= enroll.user.last_name %>	<%= enroll.user.first_name %>	<%= enroll.user.gender %>	<%= enroll.user.country %>	<%= enroll.user.spoken_languages %>	<%= enroll.user.university %>	<%= User::DEGREE[enroll.user.degree] %>	<%= enroll.user.past_conferences %>	<%= enroll.user.past_sv %>	<%= enroll.user.tshirt_size.name %>	<%= enroll.status_name %>	<%= enroll.local_experience ? 'Yes' : 'No' %>	<%= enroll.past_conferences_this ? 'Yes' : 'No' %>	<%= enroll.past_sv_this ? 'Yes' : 'No' %>	<%= enroll.visa ? 'Yes' : 'No' %>
-<% end -%>
-</textarea>

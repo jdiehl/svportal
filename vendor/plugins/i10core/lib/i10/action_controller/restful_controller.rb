@@ -178,7 +178,7 @@ module I10::ActionController::RestfulController
         end
         record = instance_variable_get '@%s' % active_record_name
         if request.xhr?
-          return render(:status => 400, :json => record.errors.collect { |k,e| e }) unless record.errors.empty?
+          return render(:status => 400, :json => record.errors.to_hash) unless record.errors.empty?
           render :nothing => true
         else
           return redirect_to(:action => DONE_ACTION % action) if record.errors.empty?

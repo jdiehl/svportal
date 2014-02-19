@@ -4,7 +4,7 @@ class Enrollment < ActiveRecord::Base
   has_many :bids
   has_many :assignments
   
-  searchable %w{users.first_name users.last_name users.university comment}
+  searchable %w{first_name last_name university comment}
   
   # only one enrollment per user per conference
   validates_uniqueness_of :user_id, :scope => :conference_id
@@ -43,13 +43,13 @@ class Enrollment < ActiveRecord::Base
   # returns all assigned tasks (but includes assignment-information!)
   # ordered by conference day
   def assignments_with_tasks
-    Assignment.find :all, :include => :task, :conditions => {:enrollment_id => id}, :order => 'tasks.day, tasks.start_time, tasks.end_time, tasks.name'
+    Assignment.find_by_sql "select * from assignments a join tasks t on (a.task_id = t.id) where a.enrollment_id = %s order by day, start_time, end_time, name" % [self.id]
   end  
   
   # returns all bids with task
   # ordered by conference day
   def bids_with_tasks
-    Bid.find :all, :include => :task, :conditions => {:enrollment_id => id}, :order => 'tasks.day, tasks.start_time, tasks.end_time, tasks.name'
+    Bid.find :all, :include => :task, :conditions => {:enrollment_id => id}, :order => 'day, start_time, end_time, name'
   end  
   
   # return all bids (of specified preference level) for one day
@@ -139,39 +139,6 @@ class Enrollment < ActiveRecord::Base
   # waitlist position
   def waitlist_position(waitlist)
     1 + waitlist.index(self) if waitlist.include? self
-  end
-  
-  # score for lottery
-  def lottery_score
-    return 1 unless self.conference.lottery_config
-    return @score if @score
-    @score = self.user.degree if (self.conference.lottery_config.degree == 1)
-    @score ||= 1
-    @score += adjust_score :local_experience
-    @score += adjust_score :past_conferences_this
-    @score += adjust_score :past_sv_this
-    @score += adjust_score :visa
-    @score = 0 if @score < 0
-    @score
-  end
-  
-  protected
-  
-  # adjust the score according to the enrollment attributes and the conference settings for a key
-  def adjust_score(key)
-    score_adjust = self.conference.lottery_config.send(key)
-    score_adjust = -score_adjust unless self.send(key)
-    
-    # required settings
-    # -> required not fulfilled -> -1000 score
-    # -> required fulfilled -> 0 score
-    score_adjust = -1000 if score_adjust < -3
-    score_adjust = 0 if score_adjust > 3
-
-    # do not give negative score
-    score_adjust = 0 if score_adjust != -1000 and score_adjust < 0
-    
-    score_adjust
   end
   
 end

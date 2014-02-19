@@ -342,15 +342,37 @@ UserSearchInput = Class.create(SearchInput, {
 
 // update bids
 UpdateBid = Class.create(I10.Request.UpdateRecord, {
-	initialize: function($super, element, task_id, preference) {
+	initialize: function($super, element, tasktype_id, preference) {
 		options = {};
 		if(!preference) { options.method = 'delete'; }
-		$super(element, null, '', {bid:{task_id:task_id, preference:preference}}, options);
+		$super(element, null, '', {bid:{tasktype_id:tasktype_id, preference:preference}}, options);
 	},
 	onSuccess: function(response) {
-		$('tr_task_'+this.record.bid.task_id).className = 'p'+(this.record.bid.preference ? this.record.bid.preference : '');
+		$('tr_task_'+this.record.bid.tasktype_id).className = 'p'+(this.record.bid.preference ? this.record.bid.preference : '');
 	},
-	onFailure: function(response, json) {
+	onFailure: function(response) {
+		if(response.status == 400) { alert(response.responseJSON.join("\n\n")); }
+	}
+
+});
+
+// update availabilities
+UpdateAvailability = Class.create(I10.Request.UpdateRecord, {
+	initialize: function($super, element, timeslot_id, day, td_id) {
+    this.timeslot_id = timeslot_id;
+    this.td_id = td_id;
+		$super(element, null, '', {availability:{timeslot_id:timeslot_id, day:day}}, {});
+	},
+	onSuccess: function(response) {
+    if ($(this.td_id).className == "busy") {
+      $('a' + this.td_id).innerHTML = "Free";
+      $(this.td_id).className = "free";
+    } else {
+      $('a' + this.td_id).innerHTML = "Busy";
+      $(this.td_id).className = "busy";
+    }
+	},
+	onFailure: function(response) {
 		if(response.status == 400) { alert(response.responseJSON.join("\n\n")); }
 	}
 

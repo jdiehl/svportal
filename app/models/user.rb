@@ -90,16 +90,6 @@ class User < ActiveRecord::Base
     Enrollment.find :first, :conditions => {:user_id => id, :conference_id => conference.id}
   end
   
-  # first name capitalization
-  def first_name=(value)
-    super value.capitalize
-  end
-  
-  # last name capitalization
-  def last_name=(value)
-    super value.capitalize
-  end
-  
   # string representation
   def to_s
     name

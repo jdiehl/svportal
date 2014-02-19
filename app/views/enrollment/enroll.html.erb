@@ -17,13 +17,11 @@
 	<%= f.select_yesno :past_conferences_this, nil, :class => 'small' %>
 	<label class="large" for="enroll_past_sv_this">Have you been an SV at this conference before?</label>
 	<%= f.select_yesno :past_sv_this, nil, :class => 'small' %>
-	<label class="large" for="enroll_no_visa">Do you need to apply for a travel visa in order to attend this conference? (answer no if you are eligible for a VISA waiver program for the country of the conference)</label>
-	<%= f.select :visa, {'No' => 1, 'Yes' => 0}, false, :class => 'small' %>
-<% if @conference.lottery_config.reason -%>
-	<br/><br/>
-	<label class="large" for="enroll_reason">Please explain why you want to be an SV at the conference.</label>
-	<textarea name="enroll[reason]" id="enroll_reason"></textarea>
-<% end -%>	
+	<label class="large" for="enroll_visa">Do you need to apply for a travel visa in order to attend this conference? (answer no if you are eligible for a VISA waiver program for the country of the conference)</label>
+	<%= f.select_yesno :visa, nil, :class => 'small' %>
+	
+
+	
 	<hr/>
 	
 	<%= submit_tag 'Agree and enroll', :class => 'button' %>

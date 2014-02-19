@@ -18,9 +18,9 @@ body{background:#ccc;}
 #main td{border:1px solid #ccc;padding:1px 3px;}
 #main label{float:left;width:140px;}
 #main label.large{width:390px;}
-#main input.small,#main select.small{margin-left:410px;width:75px;}
-#main input, #main select{display:block;margin-left:150px;margin-bottom:10px;width:300px;}
-#main textarea{height:150px;width:100%;margin-top:10px;margin-bottom:10px}
+#main input.small,select.small{margin-left:410px;width:75px;}
+#main select,.form textarea{display:block;margin-left:150px;margin-bottom:10px;width:300px;}
+#main textarea{height:150px;}
 #main input.button{display:inline;margin:0 0 0 32px;padding:1px 20px;font-size:12pt;width:auto;}
 
 /* Navigation */
@@ -69,14 +69,15 @@ body{background:#ccc;}
 #main #tasks .p1{background:#99d;}
 #main #tasks .p2{background:#bbe;}
 #main #tasks .p3{background:#ddf;}
+#main #tasks .p0{background:#fff;}
 #main #tasks .a{background:#8e8;}
 #main #tasks .f{background:#f88;}
 #main #tasks .c{background:#f88;}
-#main #tasks .bid{padding:0;}
-#main #tasks .bid a{padding:1px 5px;display:block;text-align:center;}
-#main #tasks .bid:hover{background:#000;}
-#main #tasks .bid:hover a{color:#fff;}
-#main #buttons input {margin-top:20px; padding-right:10px;margin-right:50px;}
+#main #tasks .bid{padding-right:10px;}
+#main #buttons input {margin-top:20px; margin-right:10px;}
+
+/* Time slots */
+#main #timeslots .busy{background:#f00;}
 
 /* Assignments */
 #main #assignments .status{font-weight:bold;}

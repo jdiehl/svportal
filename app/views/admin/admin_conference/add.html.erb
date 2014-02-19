@@ -1,17 +1,9 @@
 <h1>Add Conference</h1>
 
-<% if @password_wrong -%>
-<div id="error">The passwords did not match!</div>
-<% end -%>
-
 <div class="form">
 <% form_for :conference, :url => {} do |f| %>
 	<%= f.name 'Name:' %>
 	<%= f.short_name 'Short Name:' %>
-	<label for="password">Password:</label>
-	<input type="password" name="password" />
-	<label for="password2">Password (again):</label>
-	<input type="password" name="password2" />
 	<%= f.year 'Year:' %>
 	<%= f.email 'Email:' %>
 	<%= f.volunteers 'Volunteers:' %>

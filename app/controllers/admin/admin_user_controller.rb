@@ -1,7 +1,2 @@
-class Admin::AdminUserController < AdminController
-  
-  def index
-    @admin_users = AdminUser.find :all, :order => 'login'
-  end
-  
+class Admin::AdminUserController < ApplicationController
 end

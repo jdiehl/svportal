@@ -4,13 +4,6 @@ class Admin::EnrollmentController < AdminController
   include I10::ActionController::Restful
   controls_active_record :enrollment
 
-  def export
-    @status = @conference.enrollment_status params[:id] if params[:id]
-    cond = { :conference_id => @conference.id }
-    cond[:status] = @status.id if @status
-    @enrollments = Enrollment.find :all, :include => :user, :order => 'users.last_name', :conditions => cond
-  end
-
   # index
   def index
     @status = @conference.enrollment_status params[:id] if params[:id]
@@ -22,7 +15,7 @@ class Admin::EnrollmentController < AdminController
     # conditions
     cond = ['conference_id=%i' % @conference.id]
     cond << 'status=%i' % @status.id if @status
-    cond << Enrollment.search_conditions(params[:search]) if params.include? :search
+    cond << Enrollment.search_conditions(params[:search]) if params[:search]
     
     @enrollments = Enrollment.paginate :page => params[:page],
       :include => :user,

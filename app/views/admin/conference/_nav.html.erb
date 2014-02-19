@@ -2,7 +2,6 @@
 		<div class="title">Actions</div>
 <% if @admin_user.admin? -%>
 		<%= selectable_link_to 'Edit', controller.action_name == 'edit', :action => 'edit' %>
-		<%= selectable_link_to 'Configure Lottery', params[:action] == 'lottery_config', :action => 'lottery_config' %>
 		<%= selectable_link_to 'Run Lottery', params[:action] == 'lottery', :action => 'lottery' %>
 		<%= selectable_link_to 'Dump Database', params[:action] == 'dump', :action => 'dump' %>
 		<%= selectable_link_to 'Export Assignments', params[:action] == 'export', :action => 'export' %>

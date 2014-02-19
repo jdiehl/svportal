@@ -1,30 +1,19 @@
 <h1>Conference Lottery</h1>
 
 <p>
-	The conference lottery randomly assigns lottery numbers to all students and accepts the first
-	<%= @conference.volunteers %> SVs to the conference. The others will be listed as waitlisted.
-	You may run the lottery multiple times, which will only assign numbers to those students,
-	who do not yet have a number.
+	The conference lottery randomly picks an enrolled user and assigns the next lottery number to him/her.
+ 	Stops when all enrolled users were given a number.
+	It should be run only once - next iteration will have no effect!
 </p>
 
-<p>
-	To review the results of a lottery or pre-assign SVs, go to the <%= link_to 'enrollment page', :controller => :enrollment %>.
-</p>
+<% if @conference.lottery_run? -%>
+	<p>
+		The lottery should only be run while the conference is in enrollment phase.
+		Several executions will have no effect.
+	</p>
+<% end -%>
 
 <div id="lottery">
 	<input type="button" class="button" value="Run Lottery" onclick="<%= remote_function :url => {},
 		:update => 'lottery', :loading => "$('lottery').innerHTML = 'Lottery is running...'" %>">
 </div>
-
-<p>&nbsp;</p>
-
-<p>
-	You can reset the lottery, which will change the status of all user that were accepted or waitlisted
-	in the lottery to enrolled and remove all lottery numbers.
-</p>
-
-<div id="lottery_reset">
-	<input type="button" class="button" value="Reset Lottery" onclick="<%= remote_function :url => {:action => 'lottery_reset'},
-		:update => 'lottery_reset', :loading => "$('lottery_reset').innerHTML = 'Lottery is resetting...'" %>">
-</div>
-

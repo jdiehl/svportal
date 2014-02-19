@@ -27,7 +27,7 @@
 	<label for="user_university">University:</label>
 	<%= f.text_field :university %>
 	<label for="user_degree">Degree program:</label>
-	<%= f.select :degree, User::DEGREE.reverse, !@user.degree %>
+	<%= f.select :degree, User::DEGREE.reverse %>
 	<hr/>
 
 	<label for="user_past_conferences">Past conferences you have attended:</label>

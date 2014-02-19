@@ -24,7 +24,7 @@ class ShortTime
   end
   
   # string representation
-  def to_s
+  def to_s(type = nil)
     time.strftime '%H:%M'
   end
   

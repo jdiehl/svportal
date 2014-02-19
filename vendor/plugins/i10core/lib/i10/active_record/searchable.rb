@@ -53,12 +53,9 @@ module I10::ActiveRecord::Searchable
           return '' unless search_string
           columns ||= @_search_columns
           raise 'no search columns given' unless columns
-          cond = []
-          search_string.split(/\s+/).each do |single_string|
-            quoted_string = connection.quote_string single_string
-            cond << '(%s)' % columns.collect { |k| "%s like '%%%s%%'" % [k, quoted_string] }.join(' or ')
-          end
-          cond.join(' and ')
+          quoted_string = connection.quote_string search_string
+          cond = columns.collect { |k|"%s like '%%%s%%'" % [k, quoted_string] }
+          '(%s)' % cond.join(' or ')
         end
 
         alias find_every_without_search find_every

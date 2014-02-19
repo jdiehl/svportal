@@ -1,4 +1,6 @@
 class Admin::MailsController < AdminController
+  MAX_EMAILS_PER_DELIVERY = 50
+  
   include I10::ActionController::Restful
   controls_active_record :mail
 
@@ -11,7 +13,6 @@ class Admin::MailsController < AdminController
         :order => @order
     }
     @mails = Mail.find :all, options
-    @email_queue_length = Email.count
   end
   
   # view mail
@@ -37,7 +38,26 @@ class Admin::MailsController < AdminController
     params[:mail][:conference_id] = @conference.id
     @mail = Mail.create params[:mail]
     return render(:action => 'submit') unless @mail.errors.empty?
-    @mail.deliver
+    deliver
+  end
+  
+  # deliver the mails
+  def deliver
+    raise 'need id' unless @mail or params[:id]
+    @mail ||= Mail.find params[:id]
+    @offset = params[:offset].to_i
+    @offset ||= 0
+    @mail.deliver_part @offset, MAX_EMAILS_PER_DELIVERY
+    if @mail.count > @offset + MAX_EMAILS_PER_DELIVERY
+#     render :text => url_for(:action => 'deliver', :id => @mail.id, :offset => @offset + MAX_EMAILS_PER_DELIVERY)
+      redirect_to :action => 'deliver', :id => @mail.id, :offset => @offset + MAX_EMAILS_PER_DELIVERY
+    else
+#      render :text => 'index'
+      redirect_to :action => 'index'
+    end
+  end
+  
+  def submit_done
     redirect_to :action => 'index'
   end
   

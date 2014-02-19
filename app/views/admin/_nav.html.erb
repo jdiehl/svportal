@@ -8,6 +8,8 @@
 <% # removed the event manager from the navigation since it is not used yet -%>
 <% # selectable_link_to 'Event Messages', controller.is_a?(Admin::DraftsController),		:controller => 'admin/drafts',		:action => 'index', :id => nil -%>
 		<%= selectable_link_to 'Enrollment',	 controller.is_a?(Admin::EnrollmentController),	:controller => 'admin/enrollment',	:action => 'index', :id => nil %>
+		<%= selectable_link_to 'Categories',	 controller.is_a?(Admin::CategoriesController),		:controller => 'admin/categories',		:action => 'index', :id => nil %>
+		<%= selectable_link_to 'Task Types',	 controller.is_a?(Admin::TasktypesController),		:controller => 'admin/tasktypes',		:action => 'index', :id => nil %>
 		<%= selectable_link_to 'Tasks',			 controller.is_a?(Admin::TasksController),		:controller => 'admin/tasks',		:action => 'index', :id => nil %>
 <% end -%>
 		<%= selectable_link_to 'Assignments',	controller.is_a?(Admin::AssignmentsController),	:controller => 'admin/assignments',	:action => 'index', :id => nil %>

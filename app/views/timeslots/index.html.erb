@@ -1,0 +1,104 @@
+<h1>My Availability</h1>
+
+<p>Please mark the times during the conference when you would be busy and unable to work as an SV. Check the slots when you would be busy.</p>
+
+<table id="timeslots">
+	<tr>
+		<th>Time Slot</th>
+<% @conference.days.each do |day| %>
+	<% if day.to_s != "preliminary" %>
+		<th style='width:50px'><%= day %></th>
+	<% end %>
+<% end %>
+	</tr>
+<% @timeslots.each do |ts| %>
+	<tr>
+          <td><%= ts.start_time.strftime("%H:%M") %> to <%= ts.end_time.strftime("%H:%M")  %></td>
+
+<%    @conference.days.each do |day|
+        if day.to_s != "preliminary" %>
+          <td align="center" id="td_cb_<%= ts.id %>_<%= day.id %>">
+            <input type="checkbox" id="cb_<%= ts.id %>_<%= day.id %>"
+                   class="cb"
+                   onchange="updateColour('cb_<%= ts.id %>_<%= day.id %>')"
+                   <% if (@availabilities.select {|a| a.conference_id == @conference.id and a.timeslot_id == ts.id and a.day == day.date}).length > 0 %>
+                   checked
+                   <% end %>
+                   />
+          </td>
+<%      end
+      end %>
+	</tr>
+<% end %>
+<!--
+        <tr>
+          <td></td>
+
+<%    @dayid = 0
+      @conference.days.each do |day|
+        if day.to_s != "preliminary" %>
+          <td align="center"><input type="button" id="reset_<%= @dayid %>" value="Reset" /></td>
+<%      end
+       	@dayid += 1
+      end %>
+	</tr>
+-->
+</table>
+
+<div id='buttons'>
+  <input type="button" onclick="$('.cb').removeAttr('checked'); $('td').removeClass('busy');" value="Reset all" />
+  <input type="button" id="submit_avail" onclick="submitAvailabilities();" value="Submit availability" />
+</div>
+
+<script type="text/javascript">
+  function submitAvailabilities() {
+    var to_be_sent = "";
+
+    $(".cb").each(function(index) {
+      var id_arr = $(this).attr("id").split("_");
+      var str = id_arr[1] + "," + id_arr[2];
+
+      if ($(this).is(":checked")) {
+        if ("" == to_be_sent)
+          to_be_sent = str;
+        else
+          to_be_sent += "|" + str;
+      }
+    });
+
+    $("#submit_avail").val("Please wait ..");
+    $("#submit_avail").attr("disabled", "disabled");
+    $.ajax({
+      type: "POST",
+      data: "availabilities=" + to_be_sent,
+      success: function(msg){
+        $("#submit_avail").val("Submit availability");
+        $("#submit_avail").removeAttr("disabled");
+        if ("success" == msg)
+          alert("Your availability information was successfully saved.");
+        else
+          alert("Your availability information may not have been successfully saved. Please try again.");
+      },
+      error: function(obj, msg){
+        $("#submit_avail").val("Submit availability");
+        $("#submit_avail").removeAttr("disabled");
+        alert("Your availability information may not have been successfully saved. Please try again.");
+      }
+    });
+  }
+
+  function updateColour(cb_id) {
+    if (0 == $("#" + cb_id + ":checked").length)
+      $("#td_" + cb_id).removeClass("busy");
+    else
+      $("#td_" + cb_id).addClass("busy");
+  }
+
+  function updateAllColours() {
+    $(".cb").each(function (index) {
+      updateColour($(this).attr("id"));
+    });
+  }
+
+  $(document).ready(updateAllColours);
+</script>

@@ -1,0 +1,16 @@
+<h1>Categories Overview</h1>
+
+<% if @categories.empty? %>
+<p>No categories found.</p>
+<% else -%>
+<table id="categories">
+	<tr>
+		<th><%= link_to_toggle_order 'Name', 'name', @order %></th>
+	</tr>
+<% @categories.each do |category| %>
+	<tr>
+		<td><%= link_to_dialog category.name, 'edit', :action => 'edit', :id => category.id %></td>
+	</tr>
+<% end -%>
+<table>
+<% end -%>

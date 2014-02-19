@@ -25,16 +25,4 @@ namespace :chisv do
   task :fix_chi08 => :environment do
     Importer.fix_chi08
   end
-  
-  desc 'Fix user names'
-  task :fix_user_names => :environment do
-    toDelete = []
-    User.find(:all).each do |user|
-      if user.valid?
-        user.first_name = user.first_name
-        user.last_name = user.last_name
-        user.save!
-      end
-    end
-  end
 end

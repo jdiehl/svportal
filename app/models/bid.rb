@@ -1,11 +1,12 @@
 class Bid < ActiveRecord::Base
-  belongs_to :task
+  belongs_to :tasktype
   belongs_to :enrollment
   
   # preference
   HIGH, MEDIUM, LOW = 1, 2, 3
   PREFERENCE = {HIGH => 'high', MEDIUM => 'medium', LOW => 'low'}
-  PREFERENCE_LIMIT = {HIGH => 3, MEDIUM => 10, LOW => false}
+  PREFERENCE_LIMIT_MIN = {HIGH => 1, MEDIUM => 0, LOW => 0}
+  PREFERENCE_LIMIT_MAX = {HIGH => 2, MEDIUM => 2, LOW => false}
   
   OPEN, ASSIGNED, FULL, CONFLICT = 1, 2, 3, 4
   STATUS = {OPEN => 'open', ASSIGNED => 'assigned', FULL => 'full', CONFLICT => 'conflict'}
@@ -21,22 +22,49 @@ class Bid < ActiveRecord::Base
   end
   
   # bid for all free tasks with lowest priority
-  def self.bid_on_remaining_tasks_for_day_and_user(day, enroll)
-    raise 'bidding disabled' unless day.allow_bidding?
+  def self.bid_on_remaining_tasks_user(conference, enroll)
     query = 'INSERT INTO `bids` (`enrollment_id`, `status`, `task_id`, `preference`) '+
       'SELECT %i, %i, tasks.id, %i FROM tasks ' % [enroll.id, OPEN, LOW] +
-      'WHERE conference_id=%i AND day=%i ' % [day.conference.id, day.id] +
-      'AND id not in (select task_id from bids where enrollment_id=%i and day=%i) ' % [enroll.id, day.id] +
-      'AND id not in (select task_id from assignments where enrollment_id=%i and day=%i)' % [enroll.id, day.id]
+      'WHERE conference_id=%i ' % [conference.id] +
+      'AND id not in (select task_id from bids where enrollment_id=%i) ' % [enroll.id] +
+      'AND id not in (select task_id from assignments where enrollment_id=%i)' % [enroll.id]
     connection.insert query
   end
   
-  # delete all bids of one user for a specified day
-  def self.remove_bids_for_day_and_user(day, enroll)
-    raise 'bidding disabled' unless day.allow_bidding?
-    Bid.delete_all 'enrollment_id=%i and task_id in (select id from tasks where day=%i and conference_id=%i)' % [enroll.id, day.id, day.conference.id]
+  # delete all bids of one user
+  def self.remove_bids_for_user(conference, enroll)
+    # raise 'bidding disabled' unless day.allow_bidding?
+    Bid.delete_all 'enrollment_id=%i and tasktype_id in (select id from tasktypes where conference_id=%i)' % [enroll.id, conference.id]
   end
   
+  def self.validate_preference_limit(bids)
+    @h = Hash.new
+    bids.split('|').each do |ttid_bid|
+      @ttid = ttid_bid.split(',')[0].to_i
+      @pref = ttid_bid.split(',')[1].to_i
+      @tasktype = Tasktype.find :first, :conditions => {:id => @ttid}
+      if @tasktype then
+        if not @h.has_key?(@tasktype.category_id) then
+          @h[@tasktype.category_id] = Array.new
+        end
+        @h[@tasktype.category_id] << @pref
+      end
+    end
+
+    @result = true
+    @h.keys.each do |catid|
+      @highs = @h[catid].count(HIGH).to_i
+      @mediums = @h[catid].count(MEDIUM).to_i
+      @lows = @h[catid].count(LOW).to_i
+
+      if not (@highs >= 1 and @highs <= 2 and @mediums <= 2) then
+        @result = false
+      end
+    end
+
+    @result
+  end
+
   def to_s
     'Bid (%s:%s) by %s on %s' % [status_name, preference_name, user.last_name, task.name]
   end
@@ -57,28 +85,25 @@ class Bid < ActiveRecord::Base
   end
   
   # assign the bid
-  def assign!
-    raise 'bid already assigned' if status != OPEN
+  def assign(day)
+    result = false
     
     # check if task is full
-    if task.full?
+    if tasktype.full?
       full! unless full?
-      return false
-    end
-    
-    # chick if task is in conflict
-    if check_for_conflict
-      conflict! unless conflict?
       return false
     end
     
     # assign the bid
     transaction do
-      self.status = ASSIGNED
-      save!
-      task.assign_user enrollment
+      result = tasktype.assign_user enrollment, day
+      
+      if result then
+        #self.status = ASSIGNED
+        save!
+      end
     end
-    true
+    result
   end
   
   # unassign the bid
@@ -122,30 +147,4 @@ class Bid < ActiveRecord::Base
     @conflict_count > 0
   end
   
-  protected
-  
-  def validate_preference_limit
-    return true unless enrollment_id and preference
-    return true unless limit = PREFERENCE_LIMIT[preference]
-    cond = 'enrollment_id=%i and preference=%i and status=%i' % [enrollment_id, preference, OPEN]
-    cond += ' and bids.id!=%i' % id if id
-    cond += ' and tasks.day=%i' % task.day
-    cond += ' and bids.status=%i' % OPEN
-    Bid.count(:conditions => cond, :include => 'task') <= (limit - 1)
-  end
-  
-  # custom validations
-  def validate
-    # bidding not allowed
-    errors.add_to_base 'Bidding not allowed for this day' unless task.conference.day(task.day).allow_bidding?
-    # maximum number of bids
-    errors.add_to_base 'You cannot bid on more than %i tasks for one day with status %s' % 
-      [PREFERENCE_LIMIT[preference], PREFERENCE[preference]] unless validate_preference_limit
-    if open?
-      # full or conflict
-      errors.add_to_base 'Cannot bid on full task.' if task.full?
-      # don't check for conflicts, if save->validate is called by method 'conflict!'
-      errors.add_to_base 'Bid is in conflict' if check_for_conflict 
-    end
-  end
 end

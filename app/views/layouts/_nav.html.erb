@@ -28,8 +28,9 @@
 	<fieldset>
 		<legend>Tasks</legend>
 <% if @conference.bidding_enabled? -%>
-		<%= link_to 'Bid for tasks',     :controller => 'tasks' %>
-		<%= link_to 'My assigned tasks', :controller => 'tasks', :action => 'assignments' %>
+		<%= link_to 'Bid for Tasks', :controller => 'tasks' %>
+		<%= link_to 'Update Availability', :controller => 'timeslots' %>
+		<%= link_to 'View Assigned Tasks', :controller => 'tasks', :action => 'assignments' %>
 <% elsif @conference.bidding_temp_disabled? -%>
 		<p>At the moment we are assigning the tasks; the system will be available soon!</p>
 <% else -%>

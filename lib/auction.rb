@@ -28,15 +28,10 @@ class Auction
           # each bidder can have multiple bids, get a random
           bid = bid_list.delete_at rand(bid_list.length)
       
-          # check that the bid is valid
-          if bid.check_for_conflict
-            bid.conflict!
-            retry
-          end
-      
           # assign the bid
-          bid.assign!
-          assigned += 1
+          if bid.assign day
+            assigned += 1
+          end
         end # done with a bid
         
       end # done with a bid importance group
@@ -52,13 +47,13 @@ class Auction
   def bids_by_importance
     return @bids if @bids
     raw = Bid.find :all,
-      :include => :task,
-      :conditions => 'bids.status=%i and tasks.conference_id=%i and tasks.day=%i' % [Bid::OPEN, @conference.id, @day.id]
+      :include => :tasktype,
+      :conditions => 'bids.status=%i and tasktypes.conference_id=%i' % [Bid::OPEN, @conference.id]
       
     # order bids by preference and enrollment
     @bids = {}
     raw.each do |b|
-      key = '%i_%i' % [b.task.priority, b.preference]
+      key = b.preference
       @bids[key] ||= {}
       @bids[key][b.enrollment_id] ||= []
       @bids[key][b.enrollment_id] << b

@@ -1,5 +1,4 @@
 class AdminUser < ActiveRecord::Base
-  belongs_to :conference
   
   MODERATOR = 0
   ADMINISTRATOR = 1

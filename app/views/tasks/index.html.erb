@@ -1,39 +1,121 @@
-<h1>Task Bidding</h1>
+<h1>Bid for Tasks</h1>
 
-<div id='days'>
-<% @conference.days.each do |day| -%>
-<% next if day.id == 0 -%>
-	<%= link_to_day(day, @day == day) %>
-<% end -%>
-	<div class="clear"></div>
-</div>
 <p>
-	If you want to work a certain task, place a bid on it by clicking the 
-	number on the right of the task description: 1 for high preference 
-	(3/day), 2 for medium preference (10/day), 3 for low preference.
+  Please enter your bids for tasks here. There are some restrictions (per category):
+  <table>
+    <tr>
+      <th>Bid</th>
+      <th>Min. Required</th>
+      <th>Max. Allowed</th>
+    </tr>
+    <tr>
+      <td>high</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>medium</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>low</td>
+      <td>0</td>
+      <td>infinity</td>
+    </tr>
+  </table>
 </p>
 
-<% unless @day.allow_bidding? -%>
+<% @categories.each do |cat| %>
+
 <p>
-	Bidding for this day has not been activated, yet.
+  <b>Category: <%= cat.name %></b>
+  (High bids: <span id="highbids_<%= cat.id %>">0</span>,
+  Medium bids: <span id="mediumbids_<%= cat.id %>">0</span>,
+  Low bids: <span id="lowbids_<%= cat.id %>">0</span>)
 </p>
-<% end -%>
 
 <table id="tasks">
 	<tr>
-		<th>Start</th>
-		<th>End</th>
-		<th>Hours</th>
 		<th>Task</th>
 		<th>Slots</th>
 		<th colspan="4"></th>
 	</tr>
-<%= render :partial => 'task', :collection => @tasks %>
+<%= render :partial => 'tasktype', :collection => @tasktypes.select {|t| t.category_name == cat.name} %>
 </table>
+<br/>
 
-<% if @day.allow_bidding? -%>
+<% end %>
+
 <div id='buttons'>
-	<%= button_to_reload 'Bid on all tasks', :action => 'bid_all', :day => @day.id %>
-	<%= button_to_reload 'Remove all bids', :action => 'bid_none', :day => @day.id %>
+  <input type="button" onclick="updateNoneToLow();" value="Bid low on all unbid tasks" />
+  <input type="button" onclick="$('.none').attr('checked', true); updateCounts()" value="Clear all bids" />
+  <input type="button" id="submit_bids" onclick="submitBids();" value="Submit bids" />
 </div>
-<% end -%>
+
+<script type="text/javascript">
+  function submitBids() {
+    var to_be_sent = "";
+    $("tr.p").each(function(index) {
+      var ttid = $(this).attr('id').substring(8);
+      var bid = $("input[name='radio_" + ttid + "']:checked").val();
+      var str = ttid + "," + bid;
+
+      if ("0" != bid) {
+        if ("" == to_be_sent)
+          to_be_sent = str;
+        else
+          to_be_sent += "|" + str;
+      }
+    });
+
+    $("#submit_bids").val("Please wait ..");
+    $("#submit_bids").attr("disabled", "disabled");
+    $.ajax({
+      type: "POST",
+      data: "bids=" + to_be_sent,
+      success: function(msg){
+        $("#submit_bids").val("Submit bids");
+        $("#submit_bids").removeAttr("disabled");
+        if ("success" == msg)
+          alert("Your bids were successfully saved.");
+        else
+          alert("Your bids may not have been successfully saved. Reason:\n\n" + msg + "\n\nPlease try again.");
+      },
+      error: function(obj, msg){
+        $("#submit_bids").val("Submit bids");
+        $("#submit_bids").removeAttr("disabled");
+        alert("Your bids may not have been successfully saved. Reason:\n\n" + msg + "\n\nPlease try again.");
+      }
+    });
+  }
+
+  function updateCounts(catid) {
+    $("#highbids_" + catid).html($(".cat" + catid + ".high:checked").length);
+    $("#mediumbids_" + catid).html($(".cat" + catid + ".medium:checked").length);
+    $("#lowbids_" + catid).html($(".cat" + catid + ".low:checked").length);
+  }
+
+  function updateColour(ttid, p) {
+    $("#tr_task_" + ttid).removeClass('p0');
+    $("#tr_task_" + ttid).removeClass('p1');
+    $("#tr_task_" + ttid).removeClass('p2');
+    $("#tr_task_" + ttid).removeClass('p3');
+    $("#tr_task_" + ttid).addClass('p' + p);
+  }
+
+  function updateAllCounts() {
+<% @categories.each do |cat| %>
+    updateCounts(<%= cat.id %>);
+<% end %>
+  }
+
+  function updateNoneToLow() {
+<% @tasktypes.each do |tt| %>
+    if (0 < $(".tt<%= tt.id %>.none:checked").length)
+      $(".tt<%= tt.id %>.low").attr('checked', true);
+<% end %>
+  }
+
+  $(document).ready(updateAllCounts);
+</script>

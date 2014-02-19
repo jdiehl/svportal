@@ -1,0 +1,20 @@
+<h1>Task Types Overview</h1>
+
+<% if @tasktypes.empty? %>
+<p>No task types found.</p>
+<% else -%>
+<table id="tasktypes">
+	<tr>
+		<th><%= link_to_toggle_order 'Name', 'name', @order %></th>
+		<th><%= link_to_toggle_order 'Category', 'category_name', @order %></th>
+		<th><%= link_to_toggle_order 'Description', 'description', @order %></th>
+	</tr>
+<% @tasktypes.each do |tt| %>
+	<tr>
+		<td><%= link_to_dialog tt.name, 'edit', :action => 'edit', :id => tt.id %></td>
+		<td><%= tt.category_name %></td>
+		<td><%= tt.description %></td>
+	</tr>
+<% end -%>
+<table>
+<% end -%>

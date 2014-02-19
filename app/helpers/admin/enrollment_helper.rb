@@ -8,7 +8,7 @@ module Admin::EnrollmentHelper
   
   # yes or no for bool
   def yesno(bool)
-    bool ? '<center><img src="/images/bullet.png" alt="Yes"/></center>' : '&nbsp;'
+    bool ? 'Yes' : 'No'
   end
   
 end

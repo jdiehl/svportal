@@ -68,6 +68,15 @@ class Mail < ActiveRecord::Base
     end
   end
   
+  # deliver only part of the emails
+  def deliver_part(offset, limit)
+    offset.upto offset+limit-1 do |i|
+      break if i >= emails.count
+      email = emails[i]
+      Mailer.deliver_mail email, from, subject, text
+    end
+  end
+  
   # return the count of reciepients
   def count
     emails.count

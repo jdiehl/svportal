@@ -1,0 +1,4 @@
+	<div class="box">
+		<div class="title">Actions</div>
+		<%= selectable_link_to 'Create new Category', (params[:action] == 'edit' and params[:id].nil?), :action => 'edit', :id => nil %>
+	</div>

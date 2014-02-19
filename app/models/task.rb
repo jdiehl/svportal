@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   belongs_to :conference
+  belongs_to :tasktype
   has_many :assignments
   has_many :bids
 
@@ -54,18 +55,14 @@ class Task < ActiveRecord::Base
     super v.to_i
   end
   
+  def tasktype
+    @tt = Tasktype.find :all , :conditions => { :id => self.tasktype_id }
+    @tt.first
+  end
+
   # name of the priority
   def priority_name
     self.class.priority_name priority
-  end
-  
-  def bids_by_preference
-    @bids ||= Bid.find :all, :conditions => { :task_id => id }, :order => 'preference'
-  end
-
-  # returns bid-object of this task if any
-  def bid
-    bids.first if bids
   end
   
   # returns the assignment object, if it exists

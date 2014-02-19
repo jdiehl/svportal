@@ -10,6 +10,8 @@
 	<%= f.text_area :description %>
 	<label for="task_priority">Priority:</label>
 	<%= f.select :priority, Task::PRIORITY %>
+	<label for="task_tasktype">Task Type:</label>
+	<%= collection_select(:task, :tasktype_id, @conference.tasktypes, :id, :name) %>
 	<label for="task_invisible">Invisible:</label>
 	<input id="task_invisible" class="checkbox" type="checkbox" name="task[invisible]" value="1"<% if @task.invisible == 1%> checked<% end %>/>
 	<hr/>
@@ -36,7 +38,7 @@
 		<%= select_minutes @task, :hours_m %>
 	</div>
 	<label for="task_slots">Slots:</label>
-	<%= f.select :slots, (1..20).to_a %>
+	<%= f.text_field :slots %>
 
 	<div class="buttons">
 <% if @task.new_record? -%>
