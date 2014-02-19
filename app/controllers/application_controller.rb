@@ -2,9 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  filter_parameter_logging :password, :password_confirmation
-  helper :all # include all helpers, all the time
-#  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  protect_from_forgery
 
   before_filter :load_conference, :except => [:select_conference, :select_conference_post, :maintenance]
   before_filter :load_user, :except => [:send_password, :send_password_post]

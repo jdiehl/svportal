@@ -143,9 +143,8 @@ class Enrollment < ActiveRecord::Base
   
   # score for lottery
   def lottery_score
-    return 1 unless self.conference.lottery_config
     return @score if @score
-    @score = self.user.degree if (self.conference.lottery_config.degree == 1)
+    @score = self.user.degree if self.conference.lottery_config.degree
     @score ||= 1
     @score += adjust_score :local_experience
     @score += adjust_score :past_conferences_this

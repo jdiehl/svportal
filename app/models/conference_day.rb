@@ -26,7 +26,7 @@ class ConferenceDay < I10::Report
   
   # string representation
   def to_s
-    return 'preliminary' unless date
+    return 'preliminiary' unless date
     format('%a') + ' %i/%i' % [date.month, date.day]
   end
   

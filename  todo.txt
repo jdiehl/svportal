@@ -1,0 +1,9 @@
+The plugins do not work with the new rails version and must be eliminated (still lots of work)
+Routes are somewhat broken and should be updated to resources
+
+The following files must still be transfered:
+
+config/environment.rb
+config/environments/development.rb
+config/environments/production.rb
+config/environments/test.rb

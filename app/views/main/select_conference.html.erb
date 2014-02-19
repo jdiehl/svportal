@@ -18,7 +18,7 @@
 <% else -%>
 	<p>Please select a conference:</p>
 <% @conferences.each do |c| -%>
-	<p><%= link_to c.name,	{:controller => '', :conference_name => c.short_name } %></p>
+	<p><%= link_to c.name,	{:conference_name => c.short_name, :controller => 'main', :action => 'index' } %></p>
 <% end -%>
 <% end -%>
 </div>

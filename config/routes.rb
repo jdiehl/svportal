@@ -1,14 +1,14 @@
-ActionController::Routing::Routes.draw do |map|
-
-  # chi routes
-  map.connect ':conference_name/:controller/:action/:id'
-  map.connect ':conference_name/:controller/:action/:id'
-  map.connect ':conference_name/', :controller => 'main', :action => 'index'
+Svportal::Application.routes.draw do
   
-  # Named Routes
-  map.login ':conference_name/login',   :controller => 'main', :action => 'login'
-  map.logout ':conference_name/logout', :controller => 'main', :action => 'logout'
+  # client routes
+  match ':conference_name/:controller(/:action(/:id))'
+  match ':conference_name/' => 'main#index'
   
-  map.root :controller => 'main', :action => 'select_conference'
+  # named routes
+  match ':conference_name/login' => 'main#login', :as => 'login'
+  match ':conference_name/logout' => 'main#logout', :as => 'logout'
+  
+  # root
+  root :to => 'main#select_conference'
   
 end

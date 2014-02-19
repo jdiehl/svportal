@@ -12,8 +12,8 @@
 </p>
 <p>
 	You can grand additional tickets for students fulfilling certain requirements below. Just indicate
-	below how many extra tickets you want to grant for the student answering each question Yes or No.
-	You can also define what requirements must be fulfilled 
+	below how many extra tickets you wan to grant for the student answering each question Yes or No.
+	You can also define, what requirements must be fulfilled 
 	(all other students will be moved to the back of the waitlist).
 </p>
 <p>
@@ -27,18 +27,15 @@
 <% form_for :lottery_config, :class => 'lotteryform' do |f| %>
 	<label for="lottery_config[local_experience]">Student is local</label>
 	<%= f.select :local_experience, lottery_config_select_options %>
-	<label for="lottery_config[past_conferences_this]">Student has attended this conference before</label>
+	<label for="lottery_config[local_experience]">Student has attended this conference before</label>
 	<%= f.select :past_conferences_this, lottery_config_select_options %>
-	<label for="lottery_config[past_sv_this]">Student been an SV at this conference before</label>
+	<label for="lottery_config[local_experience]">Student been an SV at this conference before</label>
 	<%= f.select :past_sv_this, lottery_config_select_options %>
-	<label for="lottery_config[visa]">Student has a VISA for the conference</label>
+	<label for="lottery_config[local_experience]">Student has a VISA for the conference</label>
 	<%= f.select :visa, lottery_config_select_options %>
 	<label for="lottery_config[degree]">Grant extra tickets by student program:<br/>
 		(PhD=3, Master=2, Bachelor=1)</label>
 	<%= f.select_yesno :degree %>
-	<br/>
-	<label for="lottery_config[reason]">Ask students to motivate their enrollment</label>
-	<%= f.select_yesno :reason %>
 
 	<p>&nbsp;</p>
 	<p><%= f.submit 'Save' %></p>

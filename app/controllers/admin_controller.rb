@@ -1,11 +1,5 @@
 class AdminController < ActionController::Base
-  helper :all # include all helpers, all the time
 
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  #protect_from_forgery # :secret => '8840332317e885871573a0fc67e46296'
-
-  
   # index: redirect to admin/conference
   def index
     redirect_to :controller => 'admin/conference'
