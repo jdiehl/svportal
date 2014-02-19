@@ -1,26 +1,31 @@
-== SV Portal
+## SV Portal
 
 SV Portal is an approved solution to manage volunteers work for conferences. It includes registration for volunteers, creation of conferences and corresponding tasks. Volunteers can register for conferences and set preferences for tasks.
 
-== Authors
-* Jonathan Diehl <mailto:jonathan.diehl@rwth-aachen.de>
-* Christopher Gretzki <mailto:chirstopher.gretzki@rwth-aachen.de>
+## Authors
+- Jonathan Diehl <mailto:jonathan.diehl@rwth-aachen.de>
+- Christopher Gretzki <mailto:chirstopher.gretzki@rwth-aachen.de>
 
 Developed in part at Just Landed (http://www.justlanded.com) and the Media
 Computing Group at RWTH Aachen University (http://hci.rwth-aachen.de)
 
-== Requirements
-* Rails (>= 2.3.5)
-* gems: will_paginate RedCloth mysql ar_mailer
+## Requirements
+- Rails (>= 2.3.5)
+- gems: will_paginate RedCloth mysql ar_mailer
 
-== Mail Delivery
+## Mail Delivery
 Mails are queued in the database (emails table) for batch delivery using ar_mailer.
 You have two options to initiate batch delivery:
 
-# Daemon: ar_sendmail -d --batch-size 50 --delay 300
-# Cron Job: */5 * * * * /usr/bin/ruby /usr/bin/ar_sendmail -o --batch-size 50 --delay 300 --chdir /path/to/svportal --environment production
+Daemon:
 
-== License
+    ar_sendmail -d --batch-size 50 --delay 300
+
+Cron Job:
+
+    */5 * * * * /usr/bin/ruby /usr/bin/ar_sendmail -o --batch-size 50 --delay 300 --chdir /path/to/svportal --environment production
+
+## License
 MOZILLA PUBLIC LICENSE
 Version 1.1
 
