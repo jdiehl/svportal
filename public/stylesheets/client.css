@@ -5,7 +5,7 @@ body{background:#ccc;}
 
 /* main view */
 #main{font-size: 9pt;width: 500px; padding:25px;}
-#main .clear{clear:both;}
+#main .clear{clear:left;}
 #main .space{margin:1em 0;height:1px;}
 #main .loading{background:url('/images/loading.gif') right no-repeat;}
 #main .l{text-align:left;}
